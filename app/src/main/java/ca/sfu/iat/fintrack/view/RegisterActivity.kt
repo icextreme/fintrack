@@ -5,7 +5,7 @@ import android.os.Bundle
 import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.databinding.ActivityMainBinding
 import ca.sfu.iat.fintrack.databinding.ActivityRegisterBinding
-import ca.sfu.iat.fintrack.databinding.ActivitySigninBinding
+//import ca.sfu.iat.fintrack.databinding.ActivitySigninBinding
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
