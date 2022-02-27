@@ -7,19 +7,19 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-import ca.sfu.iat.fintrack.databinding.ActivityMainBinding
+import ca.sfu.iat.fintrack.databinding.ActivityGraphBinding
 import ca.sfu.iat.fintrack.view.GraphFragment
 import ca.sfu.iat.fintrack.view.PieFragment
 import ca.sfu.iat.fintrack.view.RegisterActivity
 
-class MainActivity : AppCompatActivity() {
+class GraphActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityGraphBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityGraphBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 //        binding.textView.setOnClickListener {
