@@ -1,15 +1,13 @@
 package ca.sfu.iat.fintrack
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import ca.sfu.iat.fintrack.databinding.ActivityMainBinding
-import ca.sfu.iat.fintrack.view.RegisterActivity
 
-class MainActivity : AppCompatActivity() {
+class LandingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
