@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="boxStrokeColor">#819b77</color>
+    <color name="fabButton">#97FF95</color>
 </resources>
