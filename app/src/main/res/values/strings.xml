@@ -15,6 +15,10 @@
     <string name="forgot_password">Forgot password?</string>
     <string name="new_to_fintrack">New to FinTrack?</string>
     <string name="register_for_free">Register for free!</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="landing_fragment">Landing fragment</string>
+    <string name="settings_fragment">Settings fragment</string>
+    <string name="overview">Overview</string>
+    <string name="settings">Settings</string>
+    <string name="fab">FAB</string>
+    <string name="login">Login</string>
 </resources>
