@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.textView.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
-        }
+//        binding.textView.setOnClickListener {
+//            startActivity(Intent(this, RegisterActivity::class.java))
+//        }
 
         binding.button3.setOnClickListener {
             if (savedInstanceState == null) {

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_rowWeight="0.5"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -18,32 +17,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:text="Bar Chart" />
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:text="Pie Chart" />
-
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
+            android:id="@+id/linearLayoutH1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.9"
-            android:text="Hello World!" />
+            android:layout_margin="25dp"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/graphFragmentContainerView"
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="0.5"
+                android:text="Bar Chart" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="0.5"
+                android:text="Pie Chart" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".1"
-            android:tag="graph_tag"
-            >
-        </androidx.fragment.app.FragmentContainerView>
+            android:layout_weight="0.2"
+            android:orientation="vertical">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/graphFragmentContainerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:tag="graph_tag"></androidx.fragment.app.FragmentContainerView>
+        </LinearLayout>
 
     </LinearLayout>
 
