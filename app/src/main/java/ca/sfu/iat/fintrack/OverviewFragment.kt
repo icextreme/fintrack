@@ -28,7 +28,7 @@ class LandingFragment : Fragment() {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             parentFragmentManager.commit {
-                replace<GraphFragment>(R.id.graphFragmentContainerView)
+                replace<BarFragment>(R.id.graphFragmentContainerView)
                 setReorderingAllowed(true)
                 addToBackStack(null)
             }
@@ -48,7 +48,7 @@ class LandingFragment : Fragment() {
         view.findViewById<Button>(R.id.button3).setOnClickListener {
             if (savedInstanceState == null) {
                 parentFragmentManager.commit {
-                    replace<GraphFragment>(R.id.graphFragmentContainerView)
+                    replace<BarFragment>(R.id.graphFragmentContainerView)
                     setReorderingAllowed(true)
                     addToBackStack(null)
                 }

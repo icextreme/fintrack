@@ -1,20 +1,14 @@
 package ca.sfu.iat.fintrack
 
-import ca.sfu.iat.fintrack.Score
 import android.content.ContentValues
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import ca.sfu.iat.fintrack.R
-import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
@@ -28,10 +22,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [GraphFragment.newInstance] factory method to
+ * Use the [BarFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class GraphFragment : Fragment() {
+class BarFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private lateinit var barChart : BarChart
     private var scoreList = ArrayList<Score>()
@@ -46,7 +40,7 @@ class GraphFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_graph, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_bar, container, false)
 //        val bundle = arguments
 //        val choice = bundle!!.getString("graphType")
 //        Log.i("s", choice.toString())
@@ -143,7 +137,7 @@ class GraphFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            GraphFragment().apply {
+            BarFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
