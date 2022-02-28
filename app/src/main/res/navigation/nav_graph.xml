@@ -10,7 +10,7 @@
         android:id="@+id/landingFragment"
         android:name="ca.sfu.iat.fintrack.LandingFragment"
         android:label="fragment_landing"
-        tools:layout="@layout/fragment_landing" />
+        tools:layout="@layout/fragment_overview" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="ca.sfu.iat.fintrack.SettingsFragment"

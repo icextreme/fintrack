@@ -1,4 +1,4 @@
-package ca.sfu.iat.fintrack.view
+package ca.sfu.iat.fintrack
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

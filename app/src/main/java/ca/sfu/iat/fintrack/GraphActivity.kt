@@ -8,9 +8,9 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import ca.sfu.iat.fintrack.databinding.ActivityGraphBinding
-import ca.sfu.iat.fintrack.view.GraphFragment
-import ca.sfu.iat.fintrack.view.PieFragment
-import ca.sfu.iat.fintrack.view.RegisterActivity
+import ca.sfu.iat.fintrack.GraphFragment
+import ca.sfu.iat.fintrack.PieFragment
+import ca.sfu.iat.fintrack.RegisterActivity
 
 class GraphActivity : AppCompatActivity() {
 

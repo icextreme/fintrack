@@ -1,10 +1,13 @@
 package ca.sfu.iat.fintrack
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -13,16 +16,23 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [landing.newInstance] factory method to
+ * Use the [LandingFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class landing : Fragment() {
+class LandingFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) {
+            parentFragmentManager.commit {
+                replace<GraphFragment>(R.id.graphFragmentContainerView)
+                setReorderingAllowed(true)
+                addToBackStack(null)
+            }
+        }
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -34,7 +44,26 @@ class landing : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_landing, container, false)
+        val view = inflater.inflate(R.layout.fragment_overview, container, false)
+        view.findViewById<Button>(R.id.button3).setOnClickListener {
+            if (savedInstanceState == null) {
+                parentFragmentManager.commit {
+                    replace<GraphFragment>(R.id.graphFragmentContainerView)
+                    setReorderingAllowed(true)
+                    addToBackStack(null)
+                }
+            }
+        }
+        view.findViewById<Button>(R.id.button4).setOnClickListener {
+            if (savedInstanceState == null) {
+                parentFragmentManager.commit {
+                    replace<PieFragment>(R.id.graphFragmentContainerView)
+                    setReorderingAllowed(true)
+                    addToBackStack(null)
+                }
+            }
+        }
+        return view
     }
 
     companion object {
@@ -44,12 +73,12 @@ class landing : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment landing.
+         * @return A new instance of fragment LandingFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            landing().apply {
+            LandingFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

@@ -3,11 +3,13 @@ package ca.sfu.iat.fintrack
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import ca.sfu.iat.fintrack.databinding.ActivityMainBinding
 
-class LandingActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -23,5 +25,6 @@ class LandingActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_fragment)
         binding.bottomNavigationView.setupWithNavController(navController)
+
     }
 }

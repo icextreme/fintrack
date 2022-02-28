@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LandingActivity">
+    tools:context=".MainActivity">
 
     <fragment
         android:id="@+id/nav_fragment"
@@ -35,25 +35,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="12dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_anchor="@id/bottom_app_bar"
             android:backgroundTint="@color/fabButton"
-            app:srcCompat="@drawable/ic_add_24"
-            android:contentDescription="@string/fab" />
+            android:contentDescription="@string/fab"
+            app:layout_anchor="@id/bottom_app_bar"
+            app:srcCompat="@drawable/ic_add_24" />
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottom_app_bar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

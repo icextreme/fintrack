@@ -1,4 +1,4 @@
-package ca.sfu.iat.fintrack.view
+package ca.sfu.iat.fintrack
 
 import ca.sfu.iat.fintrack.Score
 import android.content.ContentValues
