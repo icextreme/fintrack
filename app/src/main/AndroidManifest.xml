@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinTrack">
-
         <activity
-            android:name=".LandingActivity"
-            android:exported="true"/>
-
+            android:name=".AddEntryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
         <activity
             android:name=".RegisterActivity"
-            android:exported="true"/>
-
+            android:exported="true" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">
