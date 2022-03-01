@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:hint="@string/first_name"
-            android:textColorHint="#757575"
+            android:textColorHint="@color/hintColor"
             app:boxStrokeColor="@color/boxStrokeColor"
             app:hintTextColor="@color/boxStrokeColor"
             app:placeholderText="@string/first">
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
                 android:inputType="textPersonName"
-                android:textColorHint="#757575" />
+                android:textColorHint="@color/hintColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:hint="@string/last_name"
-            android:textColorHint="#757575"
+            android:textColorHint="@color/hintColor"
             app:boxStrokeColor="@color/boxStrokeColor"
             app:hintTextColor="@color/boxStrokeColor"
             app:placeholderText="@string/last">
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
                 android:inputType="textPersonName"
-                android:textColorHint="#757575" />
+                android:textColorHint="@color/hintColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:hint="@string/email"
-            android:textColorHint="#757575"
+            android:textColorHint="@color/hintColor"
             app:boxStrokeColor="@color/boxStrokeColor"
             app:hintTextColor="@color/boxStrokeColor"
             app:placeholderText="@string/email_example_com">
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
                 android:inputType="textEmailAddress"
-                android:textColorHint="#757575" />
+                android:textColorHint="@color/hintColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:textColorHint="#757575"
+            android:textColorHint="@color/hintColor"
             app:boxStrokeColor="@color/boxStrokeColor"
             app:endIconMode="password_toggle"
             app:hintTextColor="@color/boxStrokeColor">
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
                 android:inputType="textPassword"
-                android:textColorHint="#757575" />
+                android:textColorHint="@color/hintColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
