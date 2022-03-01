@@ -21,6 +21,7 @@
     <string name="settings">Settings</string>
     <string name="fab">FAB</string>
     <string name="login">Login</string>
+    <string name="add_entry">Add Entry</string>
 
     <string-array name="month_array">
         <item>January</item>
@@ -47,5 +48,22 @@
         <item>Household Budget</item>
         <item>Personal Budget</item>
         <item>+ New Budget</item>
+    </string-array>
+
+    <!-- Add in flower names  -->
+    <string-array name="flower_array">
+        <item>Lily</item>
+        <item>Poppy</item>
+        <item>Sunflower</item>
+        <item>Freesia</item>
+        <item>Daisy</item>
+        <item>Rose</item>
+        <item>Daffodil</item>
+        <item>Lavender</item>
+        <item>Peony</item>
+        <item>Lilac</item>
+        <item>Dahlia</item>
+        <item>Tulip</item>
+        <item>Dandelion</item>
     </string-array>
 </resources>

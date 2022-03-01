@@ -71,9 +71,8 @@
                 android:layout_weight="1"
                 android:text="$X\nIncome" />
         </LinearLayout>
-
         <LinearLayout
-            android:id="@+id/linearLayoutH1"
+            android:id="@+id/linearLayoutH3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -81,7 +80,49 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/buttonList"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="0.5"
+                android:text="List View" />
+
+            <Button
+                android:id="@+id/buttonGraph"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="0.5"
+                android:text="Graph View" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/graphFragmentContainerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:tag="graph_tag">
+            </androidx.fragment.app.FragmentContainerView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutH1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonBar"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="10dp"
@@ -89,27 +130,13 @@
                 android:text="Bar Chart" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/buttonPie"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="0.5"
                 android:text="Pie Chart" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/graphFragmentContainerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="68dp"
-                android:layout_weight="0"
-                android:tag="graph_tag"></androidx.fragment.app.FragmentContainerView>
         </LinearLayout>
 
     </LinearLayout>

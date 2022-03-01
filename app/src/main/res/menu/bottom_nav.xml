@@ -5,10 +5,9 @@
         android:title="@string/overview"
         android:icon="@drawable/ic_baseline_menu_24"/>
     <item
-        android:id="@+id/Placeholder"
-        android:title=""
-        android:checkable="false"
-        android:enabled="false"/>
+        android:id="@+id/addEntryFragment"
+        android:title="@string/add_entry"
+        android:icon="@drawable/ic_add_24"/>
     <item
         android:id="@+id/settingsFragment"
         android:title="@string/settings"

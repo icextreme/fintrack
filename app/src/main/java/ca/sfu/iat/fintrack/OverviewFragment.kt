@@ -1,12 +1,14 @@
 package ca.sfu.iat.fintrack
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.Spinner
+import androidx.core.view.updateLayoutParams
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 
@@ -25,6 +27,12 @@ class LandingFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var isGraphView: Boolean = true
+    private lateinit var pieButton: Button
+    private lateinit var barButton: Button
+    private lateinit var graphButton: Button
+    private lateinit var listButton: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,15 +56,39 @@ class LandingFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_overview, container, false)
-        view.findViewById<Button>(R.id.button3).setOnClickListener {
+        barButton = view.findViewById(R.id.buttonBar)
+        pieButton = view.findViewById(R.id.buttonPie)
+        graphButton = view.findViewById(R.id.buttonGraph)
+        listButton = view.findViewById(R.id.buttonList)
+        barButton.setOnClickListener {
             if (savedInstanceState == null) {
                 displayBarFragment()
             }
         }
-        view.findViewById<Button>(R.id.button4).setOnClickListener {
+        pieButton.setOnClickListener {
             if (savedInstanceState == null) {
                 displayPieFragment()
             }
+        }
+
+        listButton.setOnClickListener {
+            barButton.isClickable = false
+            barButton.visibility = View.INVISIBLE
+            pieButton.isClickable = false
+            pieButton.visibility = View.INVISIBLE
+            displayListFragment()
+            val linearLayoutView = view.findViewById<LinearLayout>(R.id.linearLayoutH1)
+            linearLayoutView.updateLayoutParams {
+
+            }
+
+        }
+        graphButton.setOnClickListener {
+            barButton.isClickable = true
+            barButton.visibility = View.VISIBLE
+            pieButton.isClickable = true
+            pieButton.visibility = View.VISIBLE
+            displayBarFragment()
         }
 
         val spinnerPeriod: Spinner = view.findViewById(R.id.spinnerPeriod)
@@ -70,6 +102,7 @@ class LandingFragment : Fragment() {
                 spinnerPeriod.adapter = adapter
             }
         }
+
         val spinnerBudget: Spinner = view.findViewById(R.id.spinnerBudget)
         context?.let {
             ArrayAdapter.createFromResource(
@@ -115,6 +148,14 @@ class LandingFragment : Fragment() {
     private fun displayPieFragment() {
         parentFragmentManager.commit {
             replace<PieFragment>(R.id.graphFragmentContainerView)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+        }
+    }
+
+    private fun displayListFragment() {
+        parentFragmentManager.commit {
+            replace<ListFragment>(R.id.graphFragmentContainerView)
             setReorderingAllowed(true)
             addToBackStack(null)
         }
