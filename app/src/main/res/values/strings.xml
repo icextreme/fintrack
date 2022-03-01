@@ -21,4 +21,31 @@
     <string name="settings">Settings</string>
     <string name="fab">FAB</string>
     <string name="login">Login</string>
+
+    <string-array name="month_array">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <string-array name="period_array">
+        <item>Yearly</item>
+        <item>Monthly</item>
+        <item>Daily</item>
+    </string-array>
+
+    <string-array name="budget_array">
+        <item>Household Budget</item>
+        <item>Personal Budget</item>
+        <item>+ New Budget</item>
+    </string-array>
 </resources>

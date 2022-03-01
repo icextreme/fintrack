@@ -23,24 +23,23 @@
                 android:id="@+id/textViewWelcome"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginVertical="3dp"
-                android:layout_weight="1"
+                android:layout_marginVertical="4dp"
                 android:gravity="center"
                 android:text="Welcome User" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/spinnerPeriod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginVertical="4dp"
+                android:tooltipText="Select Period" />
+            <Spinner
+                android:id="@+id/spinnerBudget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
                 android:tooltipText="Select Budget" />
 
-            <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contextClickable="false"
-                android:tooltipText="Select Period" />
         </LinearLayout>
 
         <LinearLayout

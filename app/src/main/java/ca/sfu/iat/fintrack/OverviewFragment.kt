@@ -4,7 +4,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 
@@ -56,6 +58,31 @@ class LandingFragment : Fragment() {
                 displayPieFragment()
             }
         }
+
+        val spinnerPeriod: Spinner = view.findViewById(R.id.spinnerPeriod)
+        context?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.period_array,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinnerPeriod.adapter = adapter
+            }
+        }
+        val spinnerBudget: Spinner = view.findViewById(R.id.spinnerBudget)
+        context?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.budget_array,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinnerBudget.adapter = adapter
+            }
+        }
+
+
         return view
     }
 
