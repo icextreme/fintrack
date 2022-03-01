@@ -27,16 +27,17 @@ class LandingFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
-            parentFragmentManager.commit {
-                replace<BarFragment>(R.id.graphFragmentContainerView)
-                setReorderingAllowed(true)
-                addToBackStack(null)
-            }
+            displayBarFragment()
         }
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        displayBarFragment()
     }
 
     override fun onCreateView(
@@ -47,20 +48,12 @@ class LandingFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_overview, container, false)
         view.findViewById<Button>(R.id.button3).setOnClickListener {
             if (savedInstanceState == null) {
-                parentFragmentManager.commit {
-                    replace<BarFragment>(R.id.graphFragmentContainerView)
-                    setReorderingAllowed(true)
-                    addToBackStack(null)
-                }
+                displayBarFragment()
             }
         }
         view.findViewById<Button>(R.id.button4).setOnClickListener {
             if (savedInstanceState == null) {
-                parentFragmentManager.commit {
-                    replace<PieFragment>(R.id.graphFragmentContainerView)
-                    setReorderingAllowed(true)
-                    addToBackStack(null)
-                }
+                displayPieFragment()
             }
         }
         return view
@@ -84,5 +77,19 @@ class LandingFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+    private fun displayBarFragment() {
+        parentFragmentManager.commit {
+            replace<BarFragment>(R.id.graphFragmentContainerView)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+        }
+    }
+    private fun displayPieFragment() {
+        parentFragmentManager.commit {
+            replace<PieFragment>(R.id.graphFragmentContainerView)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+        }
     }
 }

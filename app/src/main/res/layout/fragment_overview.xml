@@ -28,23 +28,19 @@
                 android:gravity="center"
                 android:text="Welcome User" />
 
-            <TextView
-                android:id="@+id/textView6"
+            <Spinner
+                android:id="@+id/spinner"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="3dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="Dropdown V" />
+                android:tooltipText="Select Budget" />
 
-            <TextView
-                android:id="@+id/textView7"
+            <Spinner
+                android:id="@+id/spinner2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="3dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Dropdown V" />
+                android:layout_height="wrap_content"
+                android:contextClickable="false"
+                android:tooltipText="Select Period" />
         </LinearLayout>
 
         <LinearLayout
