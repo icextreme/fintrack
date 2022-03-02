@@ -47,14 +47,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
-            android:layout_weight="0"
-            android:orientation="horizontal">
+            android:layout_weight="0">
 
             <TextView
                 android:id="@+id/textViewBalance"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="$X\nBalance" />
 
             <TextView
@@ -62,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="$X\nExpense" />
 
             <TextView
@@ -69,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="$X\nIncome" />
         </LinearLayout>
         <LinearLayout
