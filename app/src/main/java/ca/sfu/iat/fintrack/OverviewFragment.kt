@@ -1,12 +1,10 @@
 package ca.sfu.iat.fintrack
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.Spinner
+import android.widget.*
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -86,6 +84,21 @@ class LandingFragment : Fragment() {
                 spinnerBudget.adapter = adapter
             }
         }
+
+        spinnerBudget.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (p2 == 2) {
+                    val intent = Intent (activity, AddBudgetActivity::class.java)
+                    activity?.startActivity(intent)
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
         return view
     }
 
