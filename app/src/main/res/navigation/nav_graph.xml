@@ -11,6 +11,11 @@
         android:name="ca.sfu.iat.fintrack.LandingFragment"
         android:label="fragment_landing"
         tools:layout="@layout/fragment_overview" />
+    <activity
+        android:id="@+id/addEntryActivity"
+        android:name="ca.sfu.iat.fintrack.AddEntryActivity"
+        android:label="activity_add_entry"
+        tools:layout="@layout/activity_add_entry"/>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="ca.sfu.iat.fintrack.SettingsFragment"

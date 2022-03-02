@@ -22,6 +22,50 @@
     <string name="fab">FAB</string>
     <string name="login">Login</string>
     <string name="add_entry">Add entry</string>
+
+    <string-array name="month_array">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <string-array name="period_array">
+        <item>Yearly</item>
+        <item>Monthly</item>
+        <item>Daily</item>
+    </string-array>
+
+    <string-array name="budget_array">
+        <item>Household Budget</item>
+        <item>Personal Budget</item>
+        <item>+ New Budget</item>
+    </string-array>
+
+    <!-- Add in flower names  -->
+    <string-array name="flower_array">
+        <item>Lily</item>
+        <item>Poppy</item>
+        <item>Sunflower</item>
+        <item>Freesia</item>
+        <item>Daisy</item>
+        <item>Rose</item>
+        <item>Daffodil</item>
+        <item>Lavender</item>
+        <item>Peony</item>
+        <item>Lilac</item>
+        <item>Dahlia</item>
+        <item>Tulip</item>
+        <item>Dandelion</item>
+    </string-array>
     <string name="income">Income</string>
     <string name="expense">Expense</string>
     <string name="bill">Bill</string>

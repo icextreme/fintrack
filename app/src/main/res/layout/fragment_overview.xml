@@ -23,28 +23,23 @@
                 android:id="@+id/textViewWelcome"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginVertical="3dp"
-                android:layout_weight="1"
+                android:layout_marginVertical="4dp"
                 android:gravity="center"
                 android:text="Welcome User" />
 
-            <TextView
-                android:id="@+id/textView6"
+            <Spinner
+                android:id="@+id/spinnerPeriod"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="3dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Dropdown V" />
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:tooltipText="Select Period" />
+            <Spinner
+                android:id="@+id/spinnerBudget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:tooltipText="Select Budget" />
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="3dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Dropdown V" />
         </LinearLayout>
 
         <LinearLayout
@@ -52,14 +47,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
-            android:layout_weight="0"
-            android:orientation="horizontal">
+            android:layout_weight="0">
 
             <TextView
                 android:id="@+id/textViewBalance"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="$X\nBalance" />
 
             <TextView
@@ -67,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="$X\nExpense" />
 
             <TextView
@@ -74,11 +70,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="$X\nIncome" />
         </LinearLayout>
-
         <LinearLayout
-            android:id="@+id/linearLayoutH1"
+            android:id="@+id/linearLayoutH3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -86,35 +82,36 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/buttonList"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="0.5"
-                android:text="Bar Chart" />
+                android:text="List View" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/buttonGraph"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="0.5"
-                android:text="Pie Chart" />
+                android:text="Graph View" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/graphFragmentContainerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="68dp"
                 android:layout_weight="0"
-                android:tag="graph_tag"></androidx.fragment.app.FragmentContainerView>
+                android:tag="graph_tag">
+            </androidx.fragment.app.FragmentContainerView>
         </LinearLayout>
 
     </LinearLayout>

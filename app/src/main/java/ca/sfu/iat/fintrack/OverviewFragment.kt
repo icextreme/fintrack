@@ -1,10 +1,14 @@
 package ca.sfu.iat.fintrack
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.Spinner
+import androidx.core.view.updateLayoutParams
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 
@@ -23,20 +27,25 @@ class LandingFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var isGraphView: Boolean = true
+    private lateinit var graphButton: Button
+    private lateinit var listButton: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
-            parentFragmentManager.commit {
-                replace<BarFragment>(R.id.graphFragmentContainerView)
-                setReorderingAllowed(true)
-                addToBackStack(null)
-            }
+            displayGraphFragment()
         }
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        displayGraphFragment()
     }
 
     override fun onCreateView(
@@ -45,22 +54,36 @@ class LandingFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_overview, container, false)
-        view.findViewById<Button>(R.id.button3).setOnClickListener {
-            if (savedInstanceState == null) {
-                parentFragmentManager.commit {
-                    replace<BarFragment>(R.id.graphFragmentContainerView)
-                    setReorderingAllowed(true)
-                    addToBackStack(null)
-                }
+        graphButton = view.findViewById(R.id.buttonGraph)
+        listButton = view.findViewById(R.id.buttonList)
+        val spinnerPeriod: Spinner = view.findViewById(R.id.spinnerPeriod)
+        val spinnerBudget: Spinner = view.findViewById(R.id.spinnerBudget)
+        listButton.setOnClickListener {
+            displayListFragment()
+        }
+        graphButton.setOnClickListener {
+            displayGraphFragment()
+        }
+
+        context?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.period_array,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinnerPeriod.adapter = adapter
             }
         }
-        view.findViewById<Button>(R.id.button4).setOnClickListener {
-            if (savedInstanceState == null) {
-                parentFragmentManager.commit {
-                    replace<PieFragment>(R.id.graphFragmentContainerView)
-                    setReorderingAllowed(true)
-                    addToBackStack(null)
-                }
+
+        context?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.budget_array,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinnerBudget.adapter = adapter
             }
         }
         return view
@@ -84,5 +107,21 @@ class LandingFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    private fun displayListFragment() {
+        parentFragmentManager.commit {
+            replace<ListFragment>(R.id.graphFragmentContainerView)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+        }
+    }
+
+    private fun displayGraphFragment() {
+        parentFragmentManager.commit {
+            replace<GraphFragment>(R.id.graphFragmentContainerView)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+        }
     }
 }
