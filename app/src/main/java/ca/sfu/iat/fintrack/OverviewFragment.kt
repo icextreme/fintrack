@@ -28,8 +28,6 @@ class LandingFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var isGraphView: Boolean = true
-    private lateinit var pieButton: Button
-    private lateinit var barButton: Button
     private lateinit var graphButton: Button
     private lateinit var listButton: Button
 
@@ -37,7 +35,7 @@ class LandingFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
-            displayBarFragment()
+            displayGraphFragment()
         }
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -47,7 +45,7 @@ class LandingFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        displayBarFragment()
+        displayGraphFragment()
     }
 
     override fun onCreateView(
@@ -56,42 +54,17 @@ class LandingFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_overview, container, false)
-        barButton = view.findViewById(R.id.buttonBar)
-        pieButton = view.findViewById(R.id.buttonPie)
         graphButton = view.findViewById(R.id.buttonGraph)
         listButton = view.findViewById(R.id.buttonList)
-        barButton.setOnClickListener {
-            if (savedInstanceState == null) {
-                displayBarFragment()
-            }
-        }
-        pieButton.setOnClickListener {
-            if (savedInstanceState == null) {
-                displayPieFragment()
-            }
-        }
-
+        val spinnerPeriod: Spinner = view.findViewById(R.id.spinnerPeriod)
+        val spinnerBudget: Spinner = view.findViewById(R.id.spinnerBudget)
         listButton.setOnClickListener {
-            barButton.isClickable = false
-            barButton.visibility = View.INVISIBLE
-            pieButton.isClickable = false
-            pieButton.visibility = View.INVISIBLE
             displayListFragment()
-            val linearLayoutView = view.findViewById<LinearLayout>(R.id.linearLayoutH1)
-            linearLayoutView.updateLayoutParams {
-
-            }
-
         }
         graphButton.setOnClickListener {
-            barButton.isClickable = true
-            barButton.visibility = View.VISIBLE
-            pieButton.isClickable = true
-            pieButton.visibility = View.VISIBLE
-            displayBarFragment()
+            displayGraphFragment()
         }
 
-        val spinnerPeriod: Spinner = view.findViewById(R.id.spinnerPeriod)
         context?.let {
             ArrayAdapter.createFromResource(
                 it,
@@ -103,7 +76,6 @@ class LandingFragment : Fragment() {
             }
         }
 
-        val spinnerBudget: Spinner = view.findViewById(R.id.spinnerBudget)
         context?.let {
             ArrayAdapter.createFromResource(
                 it,
@@ -114,8 +86,6 @@ class LandingFragment : Fragment() {
                 spinnerBudget.adapter = adapter
             }
         }
-
-
         return view
     }
 
@@ -138,24 +108,18 @@ class LandingFragment : Fragment() {
                 }
             }
     }
-    private fun displayBarFragment() {
+
+    private fun displayListFragment() {
         parentFragmentManager.commit {
-            replace<BarFragment>(R.id.graphFragmentContainerView)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
-    }
-    private fun displayPieFragment() {
-        parentFragmentManager.commit {
-            replace<PieFragment>(R.id.graphFragmentContainerView)
+            replace<ListFragment>(R.id.graphFragmentContainerView)
             setReorderingAllowed(true)
             addToBackStack(null)
         }
     }
 
-    private fun displayListFragment() {
+    private fun displayGraphFragment() {
         parentFragmentManager.commit {
-            replace<ListFragment>(R.id.graphFragmentContainerView)
+            replace<GraphFragment>(R.id.graphFragmentContainerView)
             setReorderingAllowed(true)
             addToBackStack(null)
         }
