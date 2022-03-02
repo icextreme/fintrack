@@ -28,10 +28,18 @@ class GraphFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) {
+            displayBarFragment()
+        }
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        displayBarFragment()
     }
 
     override fun onCreateView(
