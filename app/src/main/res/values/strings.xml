@@ -29,6 +29,6 @@
     <string name="category">Category</string>
     <string name="item_placeholder">SFU Tuition</string>
     <string name="price">Price</string>
-    <string name="price_placeholder">10 000</string>
+    <string name="price_placeholder">10000</string>
     <string name="date_picker">MM/DD/YYYY</string>
 </resources>

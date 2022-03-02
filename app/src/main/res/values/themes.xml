@@ -18,4 +18,19 @@
     <style name="Theme.BottomNavigationTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/black</item>
     </style>
+    
+    <style name="datePicker" parent="Theme.AppCompat.Light.Dialog">
+<!--    styling done with the help of https://www.tutorialsbuzz.com/2019/09/android-datepicker-dialog-styling-kotlin.html-->
+        <item name="android:textColorPrimary">@color/hintColor</item>
+        <item name="android:textColorSecondaryInverse">@color/hintColor</item>
+        <item name="android:textColorPrimaryInverse">@color/hintColor</item>
+        <item name="colorAccent">@color/fabButton</item>
+    </style>
+
+    <style name="toggleButtons" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="colorPrimary">#e3ffd7</item>
+        <item name="colorPrimaryVariant">#819b77</item>
+        <item name="colorOnPrimary">#819b77</item>
+        <item name="android:textColor">@color/hintColor</item>
+    </style>
 </resources>
