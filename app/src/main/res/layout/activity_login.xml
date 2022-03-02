@@ -29,8 +29,8 @@
         android:layout_width="339dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/login_email"
@@ -82,15 +82,23 @@
                 android:id="@+id/remember"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/remember_me"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="@string/remember_me" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/forgot_password"/>
+                android:text="@string/forgot_password" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/register"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_account"
+            android:textColor="@color/hintColor" />
 
         <Button
             android:id="@+id/button_login"
