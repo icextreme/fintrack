@@ -1,4 +1,4 @@
-package ca.sfu.iat.fintrack
+package ca.sfu.iat.fintrack.fragments
 
 import android.content.ContentValues
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import ca.sfu.iat.fintrack.R
+import ca.sfu.iat.fintrack.model.Score
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis

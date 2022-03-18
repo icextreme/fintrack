@@ -1,4 +1,4 @@
-package ca.sfu.iat.fintrack
+package ca.sfu.iat.fintrack.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

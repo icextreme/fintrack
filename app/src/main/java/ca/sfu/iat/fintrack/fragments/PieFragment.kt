@@ -1,4 +1,4 @@
-package ca.sfu.iat.fintrack
+package ca.sfu.iat.fintrack.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,17 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ca.sfu.iat.fintrack.R
-import ca.sfu.iat.fintrack.Score
-import android.content.ContentValues
+import ca.sfu.iat.fintrack.model.Score
 import android.graphics.Color
 import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 
 // TODO: Rename parameter arguments, choose names that match

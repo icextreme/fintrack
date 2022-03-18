@@ -1,10 +1,10 @@
-package ca.sfu.iat.fintrack
+package ca.sfu.iat.fintrack.activities
 
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.databinding.ActivityAddEntryBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar

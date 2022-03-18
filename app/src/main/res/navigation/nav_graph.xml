@@ -8,17 +8,17 @@
 
     <fragment
         android:id="@+id/landingFragment"
-        android:name="ca.sfu.iat.fintrack.LandingFragment"
+        android:name="ca.sfu.iat.fintrack.fragments.LandingFragment"
         android:label="fragment_landing"
         tools:layout="@layout/fragment_overview" />
     <activity
         android:id="@+id/addEntryActivity"
-        android:name="ca.sfu.iat.fintrack.AddEntryActivity"
+        android:name="ca.sfu.iat.fintrack.activities.AddEntryActivity"
         android:label="activity_add_entry"
         tools:layout="@layout/activity_add_entry"/>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="ca.sfu.iat.fintrack.SettingsFragment"
+        android:name="ca.sfu.iat.fintrack.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

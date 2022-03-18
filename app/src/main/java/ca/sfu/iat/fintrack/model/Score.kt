@@ -1,4 +1,4 @@
-package ca.sfu.iat.fintrack
+package ca.sfu.iat.fintrack.model
 
 data class Score(
     val name: String,

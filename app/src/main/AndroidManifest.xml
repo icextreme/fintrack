@@ -10,19 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinTrack">
         <activity
-            android:name=".AddBudgetActivity"
+            android:name=".activities.AddBudgetActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".AddEntryActivity"
+            android:name=".activities.AddEntryActivity"
             android:exported="true" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
