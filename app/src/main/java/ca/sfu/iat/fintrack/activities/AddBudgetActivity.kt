@@ -1,11 +1,9 @@
-package ca.sfu.iat.fintrack
+package ca.sfu.iat.fintrack.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.databinding.ActivityAddBudgetBinding
-import ca.sfu.iat.fintrack.databinding.ActivityAddEntryBinding
-import ca.sfu.iat.fintrack.databinding.ActivityLoginBinding
 
 class AddBudgetActivity : AppCompatActivity() {
     private lateinit var binding : ActivityAddBudgetBinding

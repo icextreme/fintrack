@@ -1,4 +1,4 @@
-package ca.sfu.iat.fintrack
+package ca.sfu.iat.fintrack.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,8 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import ca.sfu.iat.fintrack.R
+import ca.sfu.iat.fintrack.activities.AddBudgetActivity
 
 
 // TODO: Rename parameter arguments, choose names that match
