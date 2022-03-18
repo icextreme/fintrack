@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import ca.sfu.iat.fintrack.ListAdapter
 import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.model.Datasource
 
