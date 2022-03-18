@@ -8,13 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ca.sfu.iat.fintrack.R
-import ca.sfu.iat.fintrack.model.Score
+import ca.sfu.iat.fintrack.model.Record
+import ca.sfu.iat.fintrack.model.getScoreList
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import java.time.LocalDate
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
 class BarFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private lateinit var barChart : BarChart
-    private var scoreList = ArrayList<Score>()
+    private var scoreList = ArrayList<Record>()
     val entries: ArrayList<BarEntry> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,10 +56,10 @@ class BarFragment : Fragment() {
         return view
     }
 
-    private fun loadBarChart(data: ArrayList<Score>) {
+    private fun loadBarChart(data: ArrayList<Record>) {
         for (i in data.indices) {
             val score = data[i]
-            entries.add(BarEntry(i.toFloat(), score.score.toFloat()))
+            entries.add(BarEntry(i.toFloat(), score.amount.toFloat()))
         }
         val barDataSet = BarDataSet(entries, "")
         barDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
@@ -95,33 +97,13 @@ class BarFragment : Fragment() {
 
     }
 
-    /**
-     * simulate API Call
-     */
-    private fun getScoreList(): ArrayList<Score> {
-        scoreList.add(Score("January", 300.0, "Winter"))
-        scoreList.add(Score("February", 250.0,"Winter"))
-        scoreList.add(Score("March", 500.0,"Spring"))
-        scoreList.add(Score("April", 50.0,"Spring"))
-        scoreList.add(Score("May", 100.0,"Spring"))
-        scoreList.add(Score("June", 100.0,"Summer"))
-        scoreList.add(Score("July", 100.0, "Summer"))
-        scoreList.add(Score("August", 100.0, "Summer"))
-        scoreList.add(Score("September", 100.0,"Fall"))
-        scoreList.add(Score("October", 100.0,"Fall"))
-        scoreList.add(Score("November", 100.0,"Fall"))
-        scoreList.add(Score("December", 100.0,"Winter"))
-
-        return scoreList
-    }
-
     inner class MyAxisFormatter : IndexAxisValueFormatter() {
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             val index = value.toInt()
             Log.d(ContentValues.TAG, "getAxisLabel: index $index")
             return if (index < scoreList.size) {
-                scoreList[index].name
+                scoreList[index].recordName
             } else {
                 ""
             }

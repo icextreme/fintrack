@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ca.sfu.iat.fintrack.R
-import ca.sfu.iat.fintrack.model.Score
+import ca.sfu.iat.fintrack.model.Record
 import android.graphics.Color
+import ca.sfu.iat.fintrack.model.getScoreList
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
@@ -26,7 +27,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class PieFragment : Fragment() {
     private lateinit var pieChart : PieChart
-    private var scoreList = ArrayList<Score>()
+    private var scoreList = ArrayList<Record>()
     val pieEntries: ArrayList<PieEntry> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,10 +67,10 @@ class PieFragment : Fragment() {
             }
     }
 
-    private fun loadPieChart(data: ArrayList<Score>) {
-        val scorePerSeason = data.groupBy { it.season }
+    private fun loadPieChart(data: ArrayList<Record>) {
+        val scorePerSeason = data.groupBy { it.category }
             .mapValues { (_, score) ->
-                score.sumOf { it.score }
+                score.sumOf { it.amount }
             }
         for (k in scorePerSeason) {
             println(k.value.toString() + k.key)
@@ -99,26 +100,6 @@ class PieFragment : Fragment() {
         l.setDrawInside(false)
         l.isEnabled = true
         pieChart.animateY(1400, Easing.EaseInOutQuad)
-    }
-
-    /**
-     * simulate API Call
-     */
-    private fun getScoreList(): ArrayList<Score> {
-        scoreList.add(Score("January", 300.0, "Winter"))
-        scoreList.add(Score("February", 250.0,"Winter"))
-        scoreList.add(Score("March", 500.0,"Spring"))
-        scoreList.add(Score("April", 50.0,"Spring"))
-        scoreList.add(Score("May", 100.0,"Spring"))
-        scoreList.add(Score("June", 100.0,"Summer"))
-        scoreList.add(Score("July", 100.0, "Summer"))
-        scoreList.add(Score("August", 100.0, "Summer"))
-        scoreList.add(Score("September", 100.0,"Fall"))
-        scoreList.add(Score("October", 100.0,"Fall"))
-        scoreList.add(Score("November", 100.0,"Fall"))
-        scoreList.add(Score("December", 100.0,"Winter"))
-
-        return scoreList
     }
 
 
