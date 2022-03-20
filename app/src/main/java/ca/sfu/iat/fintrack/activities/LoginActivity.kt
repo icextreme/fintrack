@@ -1,8 +1,8 @@
 package ca.sfu.iat.fintrack.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import ca.sfu.iat.fintrack.MainActivity
 import ca.sfu.iat.fintrack.databinding.ActivityLoginBinding
 
@@ -19,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.register.setOnClickListener{
+        binding.registerForFree.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
