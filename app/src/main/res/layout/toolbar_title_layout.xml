@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textColor="@color/black"
+        style="@style/Theme.FinTrack.NavBar"
         android:textSize="30sp"/>
 
 </LinearLayout>

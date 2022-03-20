@@ -19,7 +19,7 @@ class ListAdapter(private val dataSet: Array<String>) :
 
         init {
             // Define click listener for the ViewHolder's View.
-            textView = view.findViewById(R.id.listTextView)
+            textView = view.findViewById(R.id.date_header)
         }
     }
 
