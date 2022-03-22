@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -16,10 +17,12 @@ class ListAdapter(private val dataSet: Array<String>) :
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
+        val recyclerView: RecyclerView
 
         init {
             // Define click listener for the ViewHolder's View.
             textView = view.findViewById(R.id.date_header)
+            recyclerView = view.findViewById(R.id.category_recycler)
         }
     }
 
@@ -38,6 +41,11 @@ class ListAdapter(private val dataSet: Array<String>) :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.textView.text = dataSet[position]
+        viewHolder.recyclerView.apply {
+            layoutManager = LinearLayoutManager(viewHolder.recyclerView.context)
+            val dummyItems = arrayOf("Restaurant", "Clothing", "Gas", "Pet")
+            adapter = CategoryAdapter(dummyItems)
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
