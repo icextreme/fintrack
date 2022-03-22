@@ -50,16 +50,6 @@
             app:layout_constraintStart_toStartOf="@+id/date_header"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-        <!--        <com.google.android.material.textview.MaterialTextView-->
-        <!--            android:id="@+id/date_type"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="8dp"-->
-        <!--            app:layout_constraintStart_toStartOf="@+id/date_header"-->
-        <!--            app:layout_constraintTop_toBottomOf="@+id/divider"-->
-        <!--            tools:text="Restaurant" />-->
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
