@@ -1,10 +1,10 @@
 package ca.sfu.iat.fintrack.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ca.sfu.iat.fintrack.ListAdapter
@@ -44,7 +44,8 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewList)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.list_recycler)
+
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
             val dummyItems = Datasource(requireContext()).getDataList()
