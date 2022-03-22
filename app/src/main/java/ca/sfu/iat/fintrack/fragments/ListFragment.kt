@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ca.sfu.iat.fintrack.ListAdapter
 import ca.sfu.iat.fintrack.R
+import ca.sfu.iat.fintrack.adapters.ListAdapter
 import ca.sfu.iat.fintrack.model.Datasource
 
 // TODO: Rename parameter arguments, choose names that match
