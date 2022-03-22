@@ -1,10 +1,11 @@
-package ca.sfu.iat.fintrack
+package ca.sfu.iat.fintrack.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ca.sfu.iat.fintrack.R
 
 class CategoryAdapter(private val data: Array<String>) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
