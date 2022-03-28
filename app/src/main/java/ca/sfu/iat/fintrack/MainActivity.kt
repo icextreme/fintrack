@@ -9,10 +9,16 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import ca.sfu.iat.fintrack.databinding.ActivityMainBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.app
+import com.google.firebase.ktx.initialize
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    val dbHandler = FirebaseHandler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_fragment)
         binding.bottomNavigationView.setupWithNavController(navController)
+        dbHandler.writeNewUser("abcd123", "Allen", "Wong", "wongallen123@gmail.com")
 
     }
 }
