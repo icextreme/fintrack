@@ -11,6 +11,7 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.activities.AddBudgetActivity
+import com.google.android.material.tabs.TabLayout
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,8 +29,7 @@ class LandingFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var isGraphView: Boolean = true
-    private lateinit var graphButton: Button
-    private lateinit var listButton: Button
+    private lateinit var tabLayout: TabLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,16 +54,24 @@ class LandingFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_overview, container, false)
-        graphButton = view.findViewById(R.id.buttonGraph)
-        listButton = view.findViewById(R.id.buttonList)
+        tabLayout = view.findViewById(R.id.tabLayout)
+        tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when(tabLayout.selectedTabPosition) {
+                    0 -> displayGraphFragment()
+                    1 -> displayListFragment()
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
         val spinnerPeriod: Spinner = view.findViewById(R.id.spinnerPeriod)
         val spinnerBudget: Spinner = view.findViewById(R.id.spinnerBudget)
-        listButton.setOnClickListener {
-            displayListFragment()
-        }
-        graphButton.setOnClickListener {
-            displayGraphFragment()
-        }
 
         context?.let {
             ArrayAdapter.createFromResource(
