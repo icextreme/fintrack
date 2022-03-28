@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LandingFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.LandingFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -73,31 +74,25 @@
                 android:gravity="center"
                 android:text="$X\nIncome" />
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/linearLayoutH3"
+
+        <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_weight="0"
-            android:orientation="horizontal">
+            app:tabSelectedTextColor="@color/black"
+            android:id="@+id/tabLayout">
 
-            <Button
-                android:id="@+id/buttonList"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_weight="0.5"
-                android:text="List View" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/graph_view" />
 
-            <Button
-                android:id="@+id/buttonGraph"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_weight="0.5"
-                android:text="Graph View" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/list_view" />
 
-        </LinearLayout>
+        </com.google.android.material.tabs.TabLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

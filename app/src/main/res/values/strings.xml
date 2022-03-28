@@ -83,5 +83,7 @@
     <string name="name">Name</string>
     <string name="amount">Amount</string>
     <string name="budget_period">Budget period</string>
-    <string name="create_account">Create account</string>
+    <string name="create_account"><u>Create your account</u></string>
+    <string name="list_view">List View</string>
+    <string name="graph_view">Graph View</string>
 </resources>
