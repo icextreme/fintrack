@@ -18,9 +18,9 @@ class FirebaseHandler {
 
     fun writeNewUser(user: User, uid: String) {
         database.child("users").child(uid).get().addOnSuccessListener {
-                if (it.value == null) {
-                    database.child("users").child(uid).setValue(user)
-                }
+            if (it.value == null) {
+                database.child("users").child(uid).setValue(user)
+            }
             Log.i("firebase", "Successfully added $it")
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
