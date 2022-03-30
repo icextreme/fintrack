@@ -17,6 +17,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -57,7 +58,8 @@ class BarFragment : Fragment() {
 //        Log.i("s", choice.toString())
         barChart = view.findViewById(R.id.bar)
         val database = Firebase.database.reference
-        val recordsQuery = database.child("users/abcd123/records")
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val recordsQuery = database.child("users/$uid/records")
         recordsQuery.addValueEventListener(object: ValueEventListener {
             val recordsList = ArrayList<Record>()
             override fun onDataChange(snapshot: DataSnapshot) {

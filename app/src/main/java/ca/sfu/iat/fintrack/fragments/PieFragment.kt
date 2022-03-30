@@ -15,6 +15,8 @@ import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -48,7 +50,8 @@ class PieFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_pie, container, false)
         pieChart = view.findViewById(R.id.pie)
         val database = Firebase.database.reference
-        val recordsQuery = database.child("users/abcd123/records")
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val recordsQuery = database.child("users/$uid/records")
         recordsQuery.addValueEventListener(object: ValueEventListener {
             val recordsList = ArrayList<Record>()
             override fun onDataChange(snapshot: DataSnapshot) {

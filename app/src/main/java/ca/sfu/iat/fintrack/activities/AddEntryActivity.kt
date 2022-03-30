@@ -14,6 +14,7 @@ import java.util.Calendar
 import java.util.Locale
 import ca.sfu.iat.fintrack.FirebaseHandler
 import ca.sfu.iat.fintrack.MainActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class AddEntryActivity : AppCompatActivity() {
     val dbHandler = FirebaseHandler()
@@ -60,7 +61,7 @@ class AddEntryActivity : AppCompatActivity() {
             val itemName = binding.billItem.text.toString()
             val price = binding.priceId.text.toString().toDouble()
             val type: String = findViewById<View?>(binding.toggleButtonGroup.checkedButtonId).tag.toString()
-            dbHandler.writeEntry("abcd123", itemName, price, category, date, type)
+            FirebaseAuth.getInstance().currentUser?.let { it1 -> dbHandler.writeEntry(it1.uid, itemName, price, category, date, type) }
             clearFields()
         }
         binding.buttonDone.setOnClickListener {
