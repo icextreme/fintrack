@@ -66,6 +66,20 @@
         <item>Tulip</item>
         <item>Dandelion</item>
     </string-array>
+
+    <string-array name="categories_array">
+        <item>MISC</item>
+        <item>ENTERTAINMENT</item>
+        <item>HOUSING</item>
+        <item>FOOD</item>
+        <item>LIFESTYLE</item>
+        <item>TRANSPORTATION</item>
+        <item>UTILITIES</item>
+        <item>INSURANCE</item>
+        <item>MEDICAL</item>
+        <item>SAVINGS</item>
+        <item>PERSONAL</item>
+    </string-array>
     <string name="income">Income</string>
     <string name="expense">Expense</string>
     <string name="bill">Bill</string>
