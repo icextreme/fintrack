@@ -18,7 +18,6 @@ import com.google.firebase.ktx.initialize
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    val dbHandler = FirebaseHandler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +31,5 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_fragment)
         binding.bottomNavigationView.setupWithNavController(navController)
-        dbHandler.writeNewUser("abcd123", "Allen", "Wong", "wongallen123@gmail.com")
-
     }
 }
