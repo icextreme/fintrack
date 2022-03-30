@@ -1,6 +1,7 @@
 package ca.sfu.iat.fintrack.activities
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,9 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import ca.sfu.iat.fintrack.FirebaseHandler
-import ca.sfu.iat.fintrack.databinding.ActivityMainBinding
-import ca.sfu.iat.fintrack.model.Type
-import java.time.LocalDate
+import ca.sfu.iat.fintrack.MainActivity
 
 class AddEntryActivity : AppCompatActivity() {
     val dbHandler = FirebaseHandler()
@@ -62,10 +61,21 @@ class AddEntryActivity : AppCompatActivity() {
             val price = binding.priceId.text.toString().toDouble()
             val type: String = findViewById<View?>(binding.toggleButtonGroup.checkedButtonId).tag.toString()
             dbHandler.writeEntry("abcd123", itemName, price, category, date, type)
-            setContentView(binding.root)
+            clearFields()
         }
-    }
+        binding.buttonDone.setOnClickListener {
+            clearFields()
+            startActivity(Intent(this, MainActivity::class.java))
+        }
 
+
+    }
+    fun clearFields() {
+        binding.dateDisplay.setText("")
+        binding.billItem.setText("")
+        binding.priceId.setText("")
+        binding.dateDisplay.setText("")
+    }
     private fun updateEditTextView() {
         val myFormat = "MM/dd/yyyy"
         val sdf = SimpleDateFormat(myFormat, Locale.US)

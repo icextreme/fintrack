@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import ca.sfu.iat.fintrack.FirebaseHandler
 import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.model.Record
 import ca.sfu.iat.fintrack.model.getScoreList
@@ -16,6 +17,12 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 import java.time.LocalDate
 
 
@@ -49,9 +56,29 @@ class BarFragment : Fragment() {
 //        val choice = bundle!!.getString("graphType")
 //        Log.i("s", choice.toString())
         barChart = view.findViewById(R.id.bar)
-        scoreList = getScoreList()
-        initBarChart()
-        loadBarChart(scoreList)
+        val database = Firebase.database.reference
+        val recordsQuery = database.child("users/abcd123/records")
+        recordsQuery.addValueEventListener(object: ValueEventListener {
+            val recordsList = ArrayList<Record>()
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val record: Record? = dataSnapshot.getValue<Record>()
+                    if (record != null) {
+                        recordsList.add(record)
+                        println(record)
+                    }
+                }
+                scoreList = recordsList
+                initBarChart()
+                loadBarChart(scoreList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("Firebase", "loadPost:onCancelled", error.toException())
+            }
+        })
+
 
         return view
     }
