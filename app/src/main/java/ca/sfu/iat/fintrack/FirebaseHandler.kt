@@ -4,12 +4,8 @@ import android.content.ContentValues
 import android.util.Log
 import ca.sfu.iat.fintrack.model.Record
 import ca.sfu.iat.fintrack.model.User
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 
@@ -17,9 +13,9 @@ class FirebaseHandler {
     private var database: DatabaseReference = Firebase.database.reference
 
     fun writeNewUser(user: User, uid: String) {
-        database.child("users").child(uid).get().addOnSuccessListener {
+        database.child("test").child(uid).get().addOnSuccessListener {
             if (it.value == null) {
-                database.child("users").child(uid).setValue(user)
+                database.child("test").child(uid).setValue(user)
             }
             Log.i("firebase", "Successfully added $it")
         }.addOnFailureListener {
@@ -27,8 +23,18 @@ class FirebaseHandler {
         }
     }
 
-    fun writeEntry(userId: String, recordName: String, amount: Double, category: String, date: String, type: String) {
-        val key = database.child("users").child(userId).child("records").push().key
+    fun writeEntry(
+        userId: String,
+        budgetName: String,
+        recordName: String,
+        amount: Double,
+        category: String,
+        date: String,
+        type: String
+    ) {
+        val key =
+            database.child("test").child(userId).child("budgets").child(budgetName).child("records")
+                .push().key
         if (key == null) {
             Log.w(ContentValues.TAG, "Couldn't get push key for posts")
             return
@@ -38,7 +44,7 @@ class FirebaseHandler {
         val postRecord = record.toMap()
 
         val childUpdates = hashMapOf<String, Any>(
-            "/users/$userId/records/$key" to postRecord
+            "/test/$userId/budgets/$budgetName/records/$key" to postRecord
         )
         database.updateChildren(childUpdates)
     }
