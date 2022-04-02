@@ -13,9 +13,9 @@ class FirebaseHandler {
     private var database: DatabaseReference = Firebase.database.reference
 
     fun writeNewUser(user: User, uid: String) {
-        database.child("test").child(uid).get().addOnSuccessListener {
+        database.child("users").child(uid).get().addOnSuccessListener {
             if (it.value == null) {
-                database.child("test").child(uid).setValue(user)
+                database.child("users").child(uid).setValue(user)
             }
             Log.i("firebase", "Successfully added $it")
         }.addOnFailureListener {
@@ -33,7 +33,8 @@ class FirebaseHandler {
         type: String
     ) {
         val key =
-            database.child("test").child(userId).child("budgets").child(budgetName).child("records")
+            database.child("users").child(userId).child("budgets").child(budgetName)
+                .child("records")
                 .push().key
         if (key == null) {
             Log.w(ContentValues.TAG, "Couldn't get push key for posts")
@@ -44,7 +45,7 @@ class FirebaseHandler {
         val postRecord = record.toMap()
 
         val childUpdates = hashMapOf<String, Any>(
-            "/test/$userId/budgets/$budgetName/records/$key" to postRecord
+            "/users/$userId/budgets/$budgetName/records/$key" to postRecord
         )
         database.updateChildren(childUpdates)
     }

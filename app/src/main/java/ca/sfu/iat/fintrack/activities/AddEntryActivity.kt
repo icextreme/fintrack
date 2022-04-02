@@ -25,6 +25,17 @@ class AddEntryActivity : AppCompatActivity() {
         binding = ActivityAddEntryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val budgetSpinner = binding.spinnerBudget
+
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.budget_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            budgetSpinner.adapter = adapter
+        }
+
         val spinner = binding.spinnerCategory
         ArrayAdapter.createFromResource(
             this,
@@ -63,7 +74,7 @@ class AddEntryActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().currentUser?.let { it1 ->
                 dbHandler.writeEntry(
                     it1.uid,
-                    "test",
+                    "test two",
                     itemName,
                     price,
                     category,

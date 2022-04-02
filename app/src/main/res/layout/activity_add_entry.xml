@@ -11,15 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/montserrat_medium"
+        android:text="@string/add_entry"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/add_entry"/>
-
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -72,11 +70,28 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/budget_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Budget"
+            android:textSize="16dp" />
+
+        <Spinner
+            android:id="@+id/spinner_budget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Budget"
+            android:contentDescription="Budget"
+            android:minHeight="50dp"
+            android:tooltipText="Budget" />
+
+        <TextView
             android:id="@+id/category_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Category"
             android:textSize="16dp" />
+
 
         <Spinner
             android:id="@+id/spinner_category"
