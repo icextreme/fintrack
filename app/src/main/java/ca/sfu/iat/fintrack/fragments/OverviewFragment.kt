@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -22,6 +21,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -199,11 +200,28 @@ class LandingFragment : Fragment() {
         }
     }
 
+
     private fun displayGraphFragment() {
         parentFragmentManager.commit {
-            replace<GraphFragment>(R.id.graphFragmentContainerView)
-            setReorderingAllowed(true)
-            addToBackStack(null)
+            val bundle = Bundle()
+            val listStr = getFilterOptions()
+            bundle.putStringArrayList("filter", listStr)
+            if (!listStr.contains("null")) {
+                val graphFragment = GraphFragment.newInstance(listStr[0], listStr[1])
+                replace(R.id.graphFragmentContainerView, graphFragment)
+                setReorderingAllowed(true)
+                addToBackStack(null)
+            }
+
         }
+    }
+
+    fun getFilterOptions(): ArrayList<String> {
+        val periodFilter = view?.findViewById<Spinner>(R.id.spinnerPeriod)?.selectedItem.toString()
+        val budgetFilter = view?.findViewById<Spinner>(R.id.spinnerBudget)?.selectedItem.toString()
+        val listStr: ArrayList<String> = ArrayList()
+        listStr.add(periodFilter)
+        listStr.add(budgetFilter)
+        return listStr
     }
 }

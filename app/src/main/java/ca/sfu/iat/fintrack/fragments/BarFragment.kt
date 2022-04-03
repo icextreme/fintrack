@@ -130,7 +130,6 @@ class BarFragment : Fragment() {
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             val index = value.toInt()
-            Log.d(ContentValues.TAG, "getAxisLabel: index $index")
             return if (index < scoreList.size) {
                 scoreList[index].recordName
             } else {

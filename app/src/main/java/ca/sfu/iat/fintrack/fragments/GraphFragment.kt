@@ -26,7 +26,6 @@ class GraphFragment : Fragment() {
     private var param2: String? = null
     private lateinit var pieButton: Button
     private lateinit var barButton: Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
@@ -35,6 +34,7 @@ class GraphFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            println("$param1, $param2 REZ")
         }
     }
 
@@ -48,6 +48,7 @@ class GraphFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_graph, container, false)
+        val bundle = Bundle()
 
 
         // Inflate the layout for this fragment
