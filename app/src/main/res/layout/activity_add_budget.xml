@@ -58,7 +58,8 @@
             android:hint="Starting Budget"
             android:textColorHint="@color/hintColor"
             app:boxStrokeColor="@color/boxStrokeColor"
-            app:hintTextColor="@color/boxStrokeColor">
+            app:hintTextColor="@color/boxStrokeColor"
+            app:placeholderText="@string/example_amount">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

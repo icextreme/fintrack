@@ -5,7 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -20,7 +23,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import kotlin.collections.ArrayList
 
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -103,6 +105,7 @@ class LandingFragment : Fragment() {
             }
         }
 
+
         context?.let {
             ArrayAdapter.createFromResource(
                 it,
@@ -114,11 +117,13 @@ class LandingFragment : Fragment() {
             }
         }
 
+        spinnerBudget.setSelection(1)
         spinnerBudget.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 if (p2 == 2) {
                     val intent = Intent (activity, AddBudgetActivity::class.java)
                     activity?.startActivity(intent)
+                    spinnerBudget.setSelection(1)
                 }
             }
 
