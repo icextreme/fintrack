@@ -27,16 +27,11 @@ import com.google.firebase.ktx.Firebase
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BarFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class BarFragment : Fragment() {
     private var period: String? = null
     private var budget: String? = null
     private lateinit var barChart : BarChart
-    private var scoreList = ArrayList<Record>()
     private var filteredList = HashMap<String, Double>()
     private val entries: ArrayList<BarEntry> = ArrayList()
 
@@ -46,7 +41,6 @@ class BarFragment : Fragment() {
         arguments?.let {
             period = it.getString(ARG_PARAM1)
             budget = it.getString(ARG_PARAM2)
-            println("$period, $budget REZ BAR FRAG")
         }
     }
 
@@ -68,11 +62,10 @@ class BarFragment : Fragment() {
                     val record: Record? = dataSnapshot.getValue<Record>()
                     if (record != null) {
                         recordsList.add(record)
-                        println("YEARR" + record.date.split("/")[2])
                     }
                 }
                 initBarChart()
-                filterBarChart(recordsList)
+                loadBarChart(recordsList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -83,47 +76,41 @@ class BarFragment : Fragment() {
         return view
     }
 
-    private fun filterBarChart(data: ArrayList<Record>) {
+    private fun loadBarChart(data: ArrayList<Record>) {
+        val filteredValue = filterBarChart(data)
+        filteredList = filteredValue as HashMap<String, Double>
+        var count = 0.0
+        for (i in filteredValue.entries) {
+            entries.add(BarEntry(count.toFloat(), i.value.toFloat()))
+            count += 1
+        }
+
+        val barDataSet = BarDataSet(entries, "")
+        barDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
+        val barData = BarData(barDataSet)
+        barChart.data = barData
+        barChart.invalidate()
+
+    }
+
+    private fun filterBarChart(data: ArrayList<Record>): Map<String, Double> {
+        var filteredValue = HashMap<String, Double>() as Map<String, Double>
         if (period.equals(getString(R.string.yearly))) {
-            val filteredValue = data.groupBy {
+            filteredValue = data.groupBy {
                 it.date.split("/")[2]
             }.mapValues { (_, score) ->
                 score.sumOf { it.amount }
             }
-
-            filteredList = filteredValue as HashMap<String, Double>
-            var count = 0.0
-            for (i in filteredValue.entries) {
-                println("${i.key}, ${i.value}")
-                entries.add(BarEntry(count.toFloat(), i.value.toFloat()))
-                count += 1
-            }
-
-            val barDataSet = BarDataSet(entries, "")
-            barDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
-            val barData = BarData(barDataSet)
-            barChart.data = barData
-            barChart.invalidate()
         }
 
         if (period.equals(getString(R.string.monthly))) {
-            val filteredValue = data.groupBy {
-                it.date.split("/")[1]
+            filteredValue = data.groupBy {
+                it.date.split("/")[0]
             }.mapValues { (_, score) ->
                 score.sumOf { it.amount }
             }
-
-            for (i in filteredValue.entries.indices) {
-                val score = data[i]
-                entries.add(BarEntry(i.toFloat(), score.amount.toFloat()))
-            }
-            val barDataSet = BarDataSet(entries, "")
-            barDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
-            val barData = BarData(barDataSet)
-            barChart.data = barData
-            barChart.invalidate()
         }
-        return
+        return filteredValue
     }
 
     private fun initBarChart() {
