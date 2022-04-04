@@ -74,6 +74,7 @@ class AddBudgetActivity : AppCompatActivity() {
 
         database.updateChildren(childUpdates).addOnCompleteListener {
             Log.i("FirebaseHandler.writeNewBudget", "Added new budget")
+            // Exclusive for this activity
             finish()
         }.addOnFailureListener {
             Log.e("FirebaseHandler.writeNewBudget", "Failed to add new budget")
