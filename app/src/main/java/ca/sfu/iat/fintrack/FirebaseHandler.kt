@@ -32,10 +32,9 @@ class FirebaseHandler {
         date: String,
         type: String
     ) {
-        val key =
-            database.child("users").child(userId).child("budgets").child(budgetName)
-                .child("records")
-                .push().key
+        val key = database.child("users").child(userId).child("budgets").child(budgetName)
+            .child("records")
+            .push().key
         if (key == null) {
             Log.w(ContentValues.TAG, "Couldn't get push key for posts")
             return
