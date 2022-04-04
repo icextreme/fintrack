@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -24,6 +25,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import kotlin.collections.ArrayList
 
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -190,6 +192,7 @@ class LandingFragment : Fragment() {
                 val balanceTextView: TextView = view.findViewById(R.id.textViewBalance)
                 val expenseTextView: TextView = view.findViewById(R.id.textViewExpense)
                 val incomeTextView: TextView = view.findViewById(R.id.textViewIncome)
+
                 val str1 = "$ " + String.format("%.2f", balance) + "\nBalance"
                 val str2 = "$ " + String.format("%.2f", expense) + "\nExpense"
                 val str3 = "$ " + String.format("%.2f", income) + "\nIncome"
@@ -275,5 +278,14 @@ class LandingFragment : Fragment() {
         }
 
         spinnerBudget.setSelection(1)
+    }
+
+    private fun getFilterOptions(): ArrayList<String> {
+        val periodFilter = view?.findViewById<Spinner>(R.id.spinnerPeriod)?.selectedItem.toString()
+        val budgetFilter = view?.findViewById<Spinner>(R.id.spinnerBudget)?.selectedItem.toString()
+        val listStr: ArrayList<String> = ArrayList()
+        listStr.add(periodFilter)
+        listStr.add(budgetFilter)
+        return listStr
     }
 }

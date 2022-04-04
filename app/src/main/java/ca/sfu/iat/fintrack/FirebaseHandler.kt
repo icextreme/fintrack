@@ -19,7 +19,9 @@ class FirebaseHandler {
             if (it.value == null) {
                 database.child("users").child(uid).setValue(user)
             }
+
             writeNewBudget(uid, "Expenses", 1000.00, "Monthly")
+
             Log.i("firebase", "Successfully added $it")
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)

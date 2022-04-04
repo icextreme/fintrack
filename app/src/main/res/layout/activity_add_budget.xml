@@ -69,7 +69,6 @@
                 android:fontFamily="@font/poppins_light"
                 android:inputType="numberDecimal"
                 android:textColorHint="@color/hintColor" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -86,6 +85,21 @@
             android:layout_marginVertical="4dp"
             android:layout_marginBottom="16dp"
             android:tooltipText="Select Period" />
+            android:hint="@string/amount"
+            android:textColorHint="@color/hintColor"
+            app:boxStrokeColor="@color/boxStrokeColor"
+            app:hintTextColor="@color/boxStrokeColor"
+            app:placeholderText="@string/example_amount">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_light"
+                android:inputType="numberDecimal"
+                android:textColorHint="@color/hintColor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
     </LinearLayout>
 

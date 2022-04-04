@@ -1,10 +1,10 @@
 package ca.sfu.iat.fintrack.activities
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import ca.sfu.iat.fintrack.FirebaseHandler
@@ -24,6 +24,7 @@ import java.util.*
 class AddEntryActivity : AppCompatActivity() {
     private val dbHandler = FirebaseHandler()
     private lateinit var database: DatabaseReference
+
     private lateinit var binding: ActivityAddEntryBinding
     private val calendar: Calendar = Calendar.getInstance()
 
@@ -127,14 +128,15 @@ class AddEntryActivity : AppCompatActivity() {
 
             clearFields()
         }
+
         binding.buttonDone.setOnClickListener {
             clearFields()
 //            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
-
     }
+
 
     private fun setupSpinner(budgets: HashMap<String, String>, budgetSpinner: Spinner) {
         val budgetNames: List<String> = budgets.keys.toList()
@@ -145,15 +147,15 @@ class AddEntryActivity : AppCompatActivity() {
             ArrayAdapter(this, android.R.layout.simple_spinner_item, budgetNames)
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         budgetSpinner.adapter = spinnerArrayAdapter
+   
     }
-
+    
     private fun clearFields() {
         binding.dateDisplay.setText("")
         binding.billItem.setText("")
         binding.priceId.setText("")
         binding.dateDisplay.setText("")
     }
-
     private fun updateEditTextView() {
         val myFormat = "MM/dd/yyyy"
         val sdf = SimpleDateFormat(myFormat, Locale.US)
