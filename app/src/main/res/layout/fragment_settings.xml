@@ -46,6 +46,7 @@
                 app:placeholderText="@string/first">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_first_name_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
@@ -67,6 +68,7 @@
                 app:placeholderText="@string/last">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_last_name_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
@@ -74,7 +76,6 @@
                     android:textColorHint="@color/hintColor" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_email"
@@ -89,31 +90,11 @@
                 app:placeholderText="@string/email_example_com">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_email_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
                     android:inputType="textEmailAddress"
-                    android:textColorHint="@color/hintColor" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_old_password"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:hint="@string/old_password"
-                android:textColorHint="@color/hintColor"
-                app:boxStrokeColor="@color/boxStrokeColor"
-                app:endIconMode="password_toggle"
-                app:hintTextColor="@color/boxStrokeColor">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_light"
-                    android:inputType="textPassword"
                     android:textColorHint="@color/hintColor" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -130,6 +111,7 @@
                 app:hintTextColor="@color/boxStrokeColor">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_new_password_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
