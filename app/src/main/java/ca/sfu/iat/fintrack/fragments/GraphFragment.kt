@@ -32,7 +32,6 @@ class GraphFragment : Fragment() {
         arguments?.let {
             period = it.getString(ARG_PARAM1)
             budget = it.getString(ARG_PARAM2)
-            println("$period, $budget REZ GRAPH FRAG")
         }
     }
 

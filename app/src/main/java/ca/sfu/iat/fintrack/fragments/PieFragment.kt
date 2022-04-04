@@ -123,6 +123,7 @@ class PieFragment : Fragment() {
         pieChart.centerText = "Spending by Category"
         pieChart.setCenterTextSize(24f)
         pieChart.description.isEnabled = false
+        pieChart.setTouchEnabled(false)
         val l = pieChart.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
