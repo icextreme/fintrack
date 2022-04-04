@@ -37,6 +37,7 @@ class BarFragment : Fragment() {
     private var budget: String? = null
     private lateinit var barChart : BarChart
     private var scoreList = ArrayList<Record>()
+    private var filteredList = HashMap<String, Double>()
     private val entries: ArrayList<BarEntry> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +53,7 @@ class BarFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_bar, container, false)
 
@@ -67,11 +68,11 @@ class BarFragment : Fragment() {
                     val record: Record? = dataSnapshot.getValue<Record>()
                     if (record != null) {
                         recordsList.add(record)
+                        println("YEARR" + record.date.split("/")[2])
                     }
                 }
-                scoreList = recordsList
                 initBarChart()
-                loadBarChart(scoreList)
+                filterBarChart(recordsList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -82,17 +83,47 @@ class BarFragment : Fragment() {
         return view
     }
 
-    private fun loadBarChart(data: ArrayList<Record>) {
-        for (i in data.indices) {
-            val score = data[i]
-            entries.add(BarEntry(i.toFloat(), score.amount.toFloat()))
-        }
-        val barDataSet = BarDataSet(entries, "")
-        barDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
+    private fun filterBarChart(data: ArrayList<Record>) {
+        if (period.equals(getString(R.string.yearly))) {
+            val filteredValue = data.groupBy {
+                it.date.split("/")[2]
+            }.mapValues { (_, score) ->
+                score.sumOf { it.amount }
+            }
 
-        val barData = BarData(barDataSet)
-        barChart.data = barData
-        barChart.invalidate()
+            filteredList = filteredValue as HashMap<String, Double>
+            var count = 0.0
+            for (i in filteredValue.entries) {
+                println("${i.key}, ${i.value}")
+                entries.add(BarEntry(count.toFloat(), i.value.toFloat()))
+                count += 1
+            }
+
+            val barDataSet = BarDataSet(entries, "")
+            barDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
+            val barData = BarData(barDataSet)
+            barChart.data = barData
+            barChart.invalidate()
+        }
+
+        if (period.equals(getString(R.string.monthly))) {
+            val filteredValue = data.groupBy {
+                it.date.split("/")[1]
+            }.mapValues { (_, score) ->
+                score.sumOf { it.amount }
+            }
+
+            for (i in filteredValue.entries.indices) {
+                val score = data[i]
+                entries.add(BarEntry(i.toFloat(), score.amount.toFloat()))
+            }
+            val barDataSet = BarDataSet(entries, "")
+            barDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
+            val barData = BarData(barDataSet)
+            barChart.data = barData
+            barChart.invalidate()
+        }
+        return
     }
 
     private fun initBarChart() {
@@ -120,20 +151,20 @@ class BarFragment : Fragment() {
         xAxis.setDrawLabels(true)
         xAxis.granularity = 1f
         xAxis.labelRotationAngle = +90f
-
     }
 
     inner class MyAxisFormatter : IndexAxisValueFormatter() {
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             val index = value.toInt()
-            return if (index < scoreList.size) {
-                scoreList[index].recordName
+            return if (index < filteredList.entries.size) {
+                filteredList.keys.toTypedArray()[index]
             } else {
                 ""
             }
         }
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
