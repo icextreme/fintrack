@@ -21,7 +21,7 @@
     <string name="settings">Settings</string>
     <string name="fab">FAB</string>
     <string name="login">Login</string>
-    <string name="add_entry">Add entry</string>
+    <string name="add_entry">Add Entry</string>
     <string name="example_amount">$1000.000</string>
     <string name="yearly">Yearly</string>
     <string name="monthly">Monthly</string>
