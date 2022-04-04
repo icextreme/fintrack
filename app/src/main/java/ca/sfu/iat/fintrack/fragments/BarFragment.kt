@@ -132,6 +132,9 @@ class BarFragment : Fragment() {
         // add animation
         barChart.animateY(3000)
 
+        // remove zoom
+        barChart.setTouchEnabled(false)
+
         // to draw label on xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
         xAxis.valueFormatter = MyAxisFormatter()
@@ -144,8 +147,15 @@ class BarFragment : Fragment() {
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             val index = value.toInt()
+            val map1 = mapOf("01" to "Jan", "02" to "Feb", "03" to "Mar", "04" to "Apr",
+            "05" to "May", "06" to "Jun", "07" to "Jul", "08" to "Aug", "09" to "Sep",
+            "10" to "Oct", "11" to "Nov", "12" to "Dec")
             return if (index < filteredList.entries.size) {
-                filteredList.keys.toTypedArray()[index]
+                if (filteredList.keys.toTypedArray()[index] in map1) {
+                    map1.getValue(filteredList.keys.toTypedArray()[index])
+                } else {
+                    filteredList.keys.toTypedArray()[index]
+                }
             } else {
                 ""
             }
