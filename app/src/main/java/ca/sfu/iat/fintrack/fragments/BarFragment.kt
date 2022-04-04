@@ -1,16 +1,13 @@
 package ca.sfu.iat.fintrack.fragments
 
-import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import ca.sfu.iat.fintrack.FirebaseHandler
 import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.model.Record
-import ca.sfu.iat.fintrack.model.getScoreList
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
@@ -24,7 +21,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import java.time.LocalDate
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -41,7 +37,7 @@ class BarFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private lateinit var barChart : BarChart
     private var scoreList = ArrayList<Record>()
-    val entries: ArrayList<BarEntry> = ArrayList()
+    private val entries: ArrayList<BarEntry> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +49,7 @@ class BarFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_bar, container, false)
-//        val bundle = arguments
-//        val choice = bundle!!.getString("graphType")
-//        Log.i("s", choice.toString())
+
         barChart = view.findViewById(R.id.bar)
         val database = Firebase.database.reference
         val uid = FirebaseAuth.getInstance().currentUser?.uid
@@ -67,7 +61,6 @@ class BarFragment : Fragment() {
                     val record: Record? = dataSnapshot.getValue<Record>()
                     if (record != null) {
                         recordsList.add(record)
-                        println(record)
                     }
                 }
                 scoreList = recordsList
@@ -80,8 +73,6 @@ class BarFragment : Fragment() {
                 Log.w("Firebase", "loadPost:onCancelled", error.toException())
             }
         })
-
-
         return view
     }
 
@@ -99,22 +90,22 @@ class BarFragment : Fragment() {
     }
 
     private fun initBarChart() {
-//        hide grid lines
+        // hide grid lines
         barChart.axisLeft.setDrawGridLines(false)
         val xAxis: XAxis = barChart.xAxis
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
 
-        //remove right y-axis
+        // remove right y-axis
         barChart.axisRight.isEnabled = false
 
-        //remove legend
+        // remove legend
         barChart.legend.isEnabled = false
 
-        //remove description label
+        // remove description label
         barChart.description.isEnabled = false
 
-        //add animation
+        // add animation
         barChart.animateY(3000)
 
         // to draw label on xAxis

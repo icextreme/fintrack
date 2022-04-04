@@ -11,7 +11,6 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.activities.AddBudgetActivity
-import ca.sfu.iat.fintrack.model.Budget
 import ca.sfu.iat.fintrack.model.Record
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +20,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -39,7 +37,6 @@ class LandingFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var isGraphView: Boolean = true
     private lateinit var tabLayout: TabLayout
 
 
@@ -135,7 +132,6 @@ class LandingFragment : Fragment() {
 
         val recordsQuery = database.child("users/$uid/records")
         recordsQuery.addValueEventListener(object: ValueEventListener {
-            val budget = Budget("default")
             override fun onDataChange(snapshot: DataSnapshot) {
                 var balance: Double = 0.0
                 var expense: Double = 0.0
@@ -152,6 +148,7 @@ class LandingFragment : Fragment() {
                         }
                     }
                 }
+
                 val balanceTextView :TextView = view.findViewById(R.id.textViewBalance)
                 val expenseTextView :TextView = view.findViewById(R.id.textViewExpense)
                 val incomeTextView :TextView = view.findViewById(R.id.textViewIncome)
@@ -168,7 +165,6 @@ class LandingFragment : Fragment() {
                 Log.w("Firebase", "loadPost:onCancelled", error.toException())
             }
         })
-
         return view
     }
 
@@ -200,7 +196,6 @@ class LandingFragment : Fragment() {
         }
     }
 
-
     private fun displayGraphFragment() {
         parentFragmentManager.commit {
             val bundle = Bundle()
@@ -216,7 +211,7 @@ class LandingFragment : Fragment() {
         }
     }
 
-    fun getFilterOptions(): ArrayList<String> {
+    private fun getFilterOptions(): ArrayList<String> {
         val periodFilter = view?.findViewById<Spinner>(R.id.spinnerPeriod)?.selectedItem.toString()
         val budgetFilter = view?.findViewById<Spinner>(R.id.spinnerBudget)?.selectedItem.toString()
         val listStr: ArrayList<String> = ArrayList()

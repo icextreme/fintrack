@@ -65,7 +65,6 @@
                 android:fontFamily="@font/poppins_light"
                 android:inputType="textPersonName"
                 android:textColorHint="@color/hintColor" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -79,7 +78,7 @@
             android:textColorHint="@color/hintColor"
             app:boxStrokeColor="@color/boxStrokeColor"
             app:hintTextColor="@color/boxStrokeColor"
-            app:placeholderText="@string/email_example_com">
+            app:placeholderText="@string/example_amount">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
