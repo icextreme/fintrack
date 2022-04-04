@@ -184,6 +184,10 @@ class LandingFragment : Fragment() {
     }
 
     private fun displayListFragment() {
+        val spinnerPeriod = view?.findViewById<Spinner>(R.id.spinnerPeriod)
+        if (spinnerPeriod != null) {
+            spinnerPeriod.visibility = View.GONE
+        }
         parentFragmentManager.commit {
             replace<ListFragment>(R.id.graphFragmentContainerView)
             setReorderingAllowed(true)
@@ -192,6 +196,10 @@ class LandingFragment : Fragment() {
     }
 
     private fun displayGraphFragment() {
+        val spinnerPeriod = view?.findViewById<Spinner>(R.id.spinnerPeriod)
+        if (spinnerPeriod != null) {
+            spinnerPeriod.visibility = View.VISIBLE
+        }
         parentFragmentManager.commit {
             val listStr = getFilterOptions()
             if (!listStr.contains("null")) {
