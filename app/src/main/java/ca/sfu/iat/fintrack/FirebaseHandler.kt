@@ -4,16 +4,21 @@ import android.content.ContentValues
 import android.util.Log
 import ca.sfu.iat.fintrack.model.Record
 import ca.sfu.iat.fintrack.model.User
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 
 class FirebaseHandler {
     private var database: DatabaseReference = Firebase.database.reference
+    private var users = database.child("users")
 
     fun writeNewUser(user: User, uid: String) {
-        database.child("users").child(uid).get().addOnSuccessListener {
+        users.child(uid).get().addOnSuccessListener {
             if (it.value == null) {
                 database.child("users").child(uid).setValue(user)
             }
@@ -32,7 +37,7 @@ class FirebaseHandler {
         date: String,
         type: String
     ) {
-        val key = database.child("users").child(userId).child("budgets").child(budgetName)
+        val key = users.child(userId).child("budgets").child(budgetName)
             .child("records")
             .push().key
         if (key == null) {

@@ -9,13 +9,11 @@ import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.model.Record
 import android.graphics.Color
 import android.util.Log
-import ca.sfu.iat.fintrack.model.getScoreList
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.utils.ColorTemplate
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,7 +22,6 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -35,11 +32,19 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class PieFragment : Fragment() {
+    private var period: String? = null
+    private var budget: String? = null
     private lateinit var pieChart : PieChart
     private var scoreList = ArrayList<Record>()
-    val pieEntries: ArrayList<PieEntry> = ArrayList()
+    private val pieEntries: ArrayList<PieEntry> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            period = it.getString(ARG_PARAM1)
+            budget = it.getString(ARG_PARAM2)
+            println("$period, $budget REZ PIE FRAG")
+        }
     }
 
     override fun onCreateView(
@@ -59,7 +64,6 @@ class PieFragment : Fragment() {
                     val record: Record? = dataSnapshot.getValue<Record>()
                     if (record != null) {
                         recordsList.add(record)
-                        println(record)
                     }
                 }
                 scoreList = recordsList
@@ -72,8 +76,6 @@ class PieFragment : Fragment() {
                 Log.w("Firebase", "loadPost:onCancelled", error.toException())
             }
         })
-
-
         return view
     }
 
@@ -111,8 +113,6 @@ class PieFragment : Fragment() {
         val pieData = PieData(pieDataSet)
         pieChart.data = pieData
         pieChart.invalidate()
-
-
     }
 
     private fun initPieChart() {
@@ -131,6 +131,4 @@ class PieFragment : Fragment() {
         l.isEnabled = true
         pieChart.animateY(1400, Easing.EaseInOutQuad)
     }
-
-
 }
