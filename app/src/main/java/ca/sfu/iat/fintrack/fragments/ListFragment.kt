@@ -1,6 +1,7 @@
 package ca.sfu.iat.fintrack.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.adapters.ListAdapter
-import ca.sfu.iat.fintrack.model.Datasource
+import ca.sfu.iat.fintrack.model.Record
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,8 +56,28 @@ class ListFragment : Fragment() {
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            val dummyItems = Datasource(requireContext()).getDataList()
-            adapter = ListAdapter(dummyItems)
+            val database = Firebase.database.reference
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
+            val recordsQuery = database.child("users/$uid/records")
+            recordsQuery.addValueEventListener(object: ValueEventListener {
+                val recordsList = ArrayList<Record>()
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (dataSnapshot in snapshot.children) {
+                        val record: Record? = dataSnapshot.getValue<Record>()
+                        if (record != null) {
+                            recordsList.add(record)
+                        }
+                    }
+
+                    val dataGroupByDate = recordsList.groupBy { it.date }
+                    adapter = ListAdapter(dataGroupByDate)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Getting Post failed, log a message
+                    Log.w("Firebase", "loadPost:onCancelled", error.toException())
+                }
+            })
         }
     }
     companion object {
