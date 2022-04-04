@@ -15,9 +15,10 @@ import com.google.firebase.ktx.Firebase
 
 class FirebaseHandler {
     private var database: DatabaseReference = Firebase.database.reference
+    private var users = database.child("users")
 
     fun writeNewUser(user: User, uid: String) {
-        database.child("users").child(uid).get().addOnSuccessListener {
+        users.child(uid).get().addOnSuccessListener {
             if (it.value == null) {
                 database.child("users").child(uid).setValue(user)
             }
@@ -28,7 +29,7 @@ class FirebaseHandler {
     }
 
     fun writeEntry(userId: String, recordName: String, amount: Double, category: String, date: String, type: String) {
-        val key = database.child("users").child(userId).child("records").push().key
+        val key = users.child(userId).child("records").push().key
         if (key == null) {
             Log.w(ContentValues.TAG, "Couldn't get push key for posts")
             return
