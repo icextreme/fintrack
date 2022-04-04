@@ -23,6 +23,8 @@
     <string name="login">Login</string>
     <string name="add_entry">Add entry</string>
     <string name="example_amount">$1000.000</string>
+    <string name="yearly">Yearly</string>
+    <string name="monthly">Monthly</string>
 
     <string-array name="month_array">
         <item>January</item>

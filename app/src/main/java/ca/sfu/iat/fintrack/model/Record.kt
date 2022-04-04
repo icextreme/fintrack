@@ -18,7 +18,6 @@ data class Record(
     val type: String = "",
     var date: String = "01/01/1970"
 ) {
-
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
@@ -29,25 +28,4 @@ data class Record(
             "date" to date
         )
     }
-}
-
-/**
- * simulate API Call
- */
-fun getScoreList(): ArrayList<Record> {
-    val scoreList = ArrayList<Record>()
-    scoreList.add(Record("January", 300.0, "Winter", Type.EXPENSE.toString()))
-    scoreList.add(Record("February", 250.0,"Winter",Type.EXPENSE.toString()))
-    scoreList.add(Record("March", 500.0,"Spring",Type.EXPENSE.toString()))
-    scoreList.add(Record("April", 50.0,"Spring",Type.EXPENSE.toString()))
-    scoreList.add(Record("May", 100.0,"Spring",Type.EXPENSE.toString()))
-    scoreList.add(Record("June", 100.0,"Summer",Type.EXPENSE.toString()))
-    scoreList.add(Record("July", 100.0, "Summer",Type.EXPENSE.toString()))
-    scoreList.add(Record("August", 100.0, "Summer",Type.EXPENSE.toString()))
-    scoreList.add(Record("September", 100.0,"Fall",Type.EXPENSE.toString()))
-    scoreList.add(Record("October", 100.0,"Fall",Type.EXPENSE.toString()))
-    scoreList.add(Record("November", 100.0,"Fall",Type.EXPENSE.toString()))
-    scoreList.add(Record("December", 100.0,"Winter",Type.EXPENSE.toString()))
-
-    return scoreList
 }
