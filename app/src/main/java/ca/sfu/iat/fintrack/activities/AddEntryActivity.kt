@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import ca.sfu.iat.fintrack.FirebaseHandler
@@ -64,15 +65,6 @@ class AddEntryActivity : AppCompatActivity() {
                 }
             )
         }
-
-//        ArrayAdapter.createFromResource(
-//            this,
-//            R.array.budget_array,
-//            android.R.layout.simple_spinner_item
-//        ).also { adapter ->
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//            budgetSpinner.adapter = adapter
-//        }
 
         val spinner = binding.spinnerCategory
         ArrayAdapter.createFromResource(

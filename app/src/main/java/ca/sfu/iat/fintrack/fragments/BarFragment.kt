@@ -54,25 +54,40 @@ class BarFragment : Fragment() {
         barChart = view.findViewById(R.id.bar)
         val database = Firebase.database.reference
         val uid = FirebaseAuth.getInstance().currentUser?.uid
-        val recordsQuery = database.child("users/$uid/records")
-        recordsQuery.addValueEventListener(object: ValueEventListener {
-            val recordsList = ArrayList<Record>()
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
-                    val record: Record? = dataSnapshot.getValue<Record>()
-                    if (record != null) {
-                        recordsList.add(record)
+        database.child("users/$uid/budgets")
+            .orderByChild("name")
+            .equalTo("$budget").addListenerForSingleValueEvent(object: ValueEventListener {
+                var key: String? = null
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (dataSnapshot in snapshot.children) {
+                        key = dataSnapshot.key.toString()
                     }
-                }
-                initBarChart()
-                loadBarChart(recordsList)
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.w("Firebase", "loadPost:onCancelled", error.toException())
-            }
-        })
+                    val recordsQuery = database.child("users/$uid/budgets/$key/records")
+                    recordsQuery.addValueEventListener(object: ValueEventListener {
+                        val recordsList = ArrayList<Record>()
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            for (dataSnapshot in snapshot.children) {
+                                val record: Record? = dataSnapshot.getValue<Record>()
+                                if (record != null) {
+                                    recordsList.add(record)
+                                }
+                            }
+                            initBarChart()
+                            loadBarChart(recordsList)
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            // Getting Post failed, log a message
+                            Log.w("Firebase", "loadPost:onCancelled", error.toException())
+                        }
+                    })
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
         return view
     }
 

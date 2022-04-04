@@ -20,7 +20,7 @@ class FirebaseHandler {
                 database.child("users").child(uid).setValue(user)
             }
 
-            writeNewBudget(uid, "Expenses", 1000.00, "Monthly")
+            writeNewBudget(uid, "Expenses", 1000.00)
 
             Log.i("firebase", "Successfully added $it")
         }.addOnFailureListener {
@@ -55,11 +55,10 @@ class FirebaseHandler {
     }
 
 
-    fun writeNewBudget(
+    private fun writeNewBudget(
         userId: String,
         budgetName: String,
         startingAmount: Double,
-        period: String
     ) {
         val key = database.child("users").child(userId).child("budgets").push().key
 
@@ -68,7 +67,7 @@ class FirebaseHandler {
             return
         }
 
-        val budget = Budget(budgetName, startingAmount, period)
+        val budget = Budget(budgetName, startingAmount)
         val postBudget = budget.toMap()
 
         val childUpdates = hashMapOf<String, Any>(

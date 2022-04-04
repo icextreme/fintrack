@@ -10,10 +10,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.activities.AddBudgetActivity
 import ca.sfu.iat.fintrack.model.Record
@@ -37,13 +35,17 @@ class LandingFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var tabLayout: TabLayout
-
+    private val database = Firebase.database.reference
+    private val auth = FirebaseAuth.getInstance()
+    private val currentUser = auth.currentUser
+    private var filterOptions: ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             displayGraphFragment()
         }
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -61,42 +63,19 @@ class LandingFragment : Fragment() {
     ): View? {
 
         // Init Firebase database
-        val database = Firebase.database.reference
-        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val currentUser = auth.currentUser
+        val uid = currentUser?.uid
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_overview, container, false)
-        tabLayout = view.findViewById(R.id.tabLayout)
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tabLayout.selectedTabPosition) {
-                    0 -> displayGraphFragment()
-                    1 -> displayListFragment()
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-
-        })
-
-        val welcomeUserTextView: TextView = view.findViewById(R.id.textViewWelcome)
-        val username =
-            Firebase.database.reference.child("users/$uid/firstName").get().addOnSuccessListener {
-                welcomeUserTextView.text = String.format(getString(R.string.welcome_user), it.value)
-            }.addOnFailureListener {
-                welcomeUserTextView.text = String.format(getString(R.string.welcome_user), "USER")
-            }
 
         val budgets = hashMapOf<String, String>()
         val budgetNames = mutableListOf("+ Add Entry")
         val spinnerBudget: Spinner = view.findViewById(R.id.spinnerBudget)
+        val spinnerPeriod: Spinner = view.findViewById(R.id.spinnerPeriod)
 
-        FirebaseAuth.getInstance().currentUser?.let { it1 ->
-            database.child("users").child(it1.uid).child("budgets").addValueEventListener(
+        if (uid != null) {
+            database.child("users").child(uid).child("budgets").addValueEventListener(
                 object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         for (each in snapshot.children) {
@@ -109,6 +88,32 @@ class LandingFragment : Fragment() {
                             }
                         }
                         setupSpinner(budgets, spinnerBudget, budgetNames)
+                        FirebaseAuth.getInstance().currentUser?.let { it1 ->
+                            database.child("users/${it1.uid}/budgets")
+                                .orderByChild("name")
+                                .equalTo(spinnerBudget.selectedItem.toString())
+                                .addValueEventListener(
+                                    object : ValueEventListener {
+                                        var budgetId: String? = null
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            for (each in snapshot.children) {
+                                                budgetId = each.key.toString()
+                                                println("BUDGETID: ${budgetId}")
+                                            }
+
+                                            val recordsQuery = database.child("users/$uid/budgets/$budgetId/records")
+                                        }
+
+                                        override fun onCancelled(error: DatabaseError) {
+                                            Log.w(
+                                                "FirebaseAuth.getInstance.budgets.onCancelled",
+                                                "error",
+                                                error.toException()
+                                            )
+                                        }
+                                    }
+                                )
+                        }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -122,19 +127,7 @@ class LandingFragment : Fragment() {
             )
         }
 
-//        val spinnerBudget: Spinner = view.findViewById(R.id.spinnerBudget)
-//        context?.let {
-//            ArrayAdapter.createFromResource(
-//                it,
-//                R.array.budget_array,
-//                android.R.layout.simple_spinner_item
-//            ).also { adapter ->
-//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//                spinnerBudget.adapter = adapter
-//            }
-//        }
 
-        val spinnerPeriod: Spinner = view.findViewById(R.id.spinnerPeriod)
         context?.let {
             ArrayAdapter.createFromResource(
                 it,
@@ -156,7 +149,21 @@ class LandingFragment : Fragment() {
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
+                tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                    override fun onTabSelected(tab: TabLayout.Tab?) {
+                        when (tab?.position) {
+                            0 -> displayGraphFragment()
+                            1 -> displayListFragment()
+                        }
+                    }
+
+                    override fun onTabUnselected(tab: TabLayout.Tab?) {
+                    }
+
+                    override fun onTabReselected(tab: TabLayout.Tab?) {
+                    }
+
+                })
             }
         }
 
@@ -170,42 +177,31 @@ class LandingFragment : Fragment() {
             }
         }
 
-        val recordsQuery = database.child("users/$uid/records")
-        recordsQuery.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var balance = 0.0
-                var expense = 0.0
-                var income = 0.0
-                for (dataSnapshot in snapshot.children) {
-                    val record: Record? = dataSnapshot.getValue<Record>()
-                    if (record != null) {
-                        if (record.type == getString(R.string.income)) {
-                            income += record.amount
-                            balance += record.amount
-                        } else if (record.type == getString((R.string.expense))) {
-                            expense += record.amount
-                            balance -= record.amount
-                        }
-                    }
+        tabLayout = view.findViewById(R.id.tabLayout)
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tabLayout.selectedTabPosition) {
+                    0 -> displayGraphFragment()
+                    1 -> displayListFragment()
                 }
-
-                val balanceTextView: TextView = view.findViewById(R.id.textViewBalance)
-                val expenseTextView: TextView = view.findViewById(R.id.textViewExpense)
-                val incomeTextView: TextView = view.findViewById(R.id.textViewIncome)
-
-                val str1 = "$ " + String.format("%.2f", balance) + "\nBalance"
-                val str2 = "$ " + String.format("%.2f", expense) + "\nExpense"
-                val str3 = "$ " + String.format("%.2f", income) + "\nIncome"
-                balanceTextView.text = str1
-                expenseTextView.text = str2
-                incomeTextView.text = str3
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.w("Firebase", "loadPost:onCancelled", error.toException())
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
             }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
         })
+
+        val welcomeUserTextView: TextView = view.findViewById(R.id.textViewWelcome)
+        val username =
+            database.child("users/$uid/firstName").get().addOnSuccessListener {
+                welcomeUserTextView.text = String.format(getString(R.string.welcome_user), it.value)
+            }.addOnFailureListener {
+                welcomeUserTextView.text = String.format(getString(R.string.welcome_user), "USER")
+            }
+
         return view
     }
 
@@ -226,9 +222,13 @@ class LandingFragment : Fragment() {
             spinnerPeriod.visibility = View.GONE
         }
         parentFragmentManager.commit {
-            replace<ListFragment>(R.id.graphFragmentContainerView)
-            setReorderingAllowed(true)
-            addToBackStack(null)
+            val listStr = getFilterOptions()
+            if (!listStr.contains("null")) {
+                val listFragment = ListFragment.newInstance(listStr[0], listStr[1])
+                replace(R.id.graphFragmentContainerView, listFragment)
+                setReorderingAllowed(true)
+                addToBackStack(null)
+            }
         }
     }
 
@@ -252,10 +252,10 @@ class LandingFragment : Fragment() {
     private fun getFilterOptions(): ArrayList<String> {
         val periodFilter = view?.findViewById<Spinner>(R.id.spinnerPeriod)?.selectedItem.toString()
         val budgetFilter = view?.findViewById<Spinner>(R.id.spinnerBudget)?.selectedItem.toString()
-        val listStr: ArrayList<String> = ArrayList()
-        listStr.add(periodFilter)
-        listStr.add(budgetFilter)
-        return listStr
+        filterOptions.clear()
+        filterOptions.add(periodFilter)
+        filterOptions.add(budgetFilter)
+        return filterOptions
     }
 
     private fun setupSpinner(
@@ -276,16 +276,8 @@ class LandingFragment : Fragment() {
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerBudget.adapter = spinnerArrayAdapter
         }
-
         spinnerBudget.setSelection(1)
-    }
+        println("SPINNER// ${spinnerBudget.selectedItem}")
 
-    private fun getFilterOptions(): ArrayList<String> {
-        val periodFilter = view?.findViewById<Spinner>(R.id.spinnerPeriod)?.selectedItem.toString()
-        val budgetFilter = view?.findViewById<Spinner>(R.id.spinnerBudget)?.selectedItem.toString()
-        val listStr: ArrayList<String> = ArrayList()
-        listStr.add(periodFilter)
-        listStr.add(budgetFilter)
-        return listStr
     }
 }
