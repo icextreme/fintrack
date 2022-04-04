@@ -26,14 +26,14 @@ class FirebaseHandler {
 
     fun writeEntry(
         userId: String,
-        budgetName: String,
+        budgetId: String,
         recordName: String,
         amount: Double,
         category: String,
         date: String,
         type: String
     ) {
-        val key = users.child(userId).child("budgets").child(budgetName)
+        val key = users.child(userId).child("budgets").child(budgetId)
             .child("records")
             .push().key
         if (key == null) {
@@ -45,12 +45,10 @@ class FirebaseHandler {
         val postRecord = record.toMap()
 
         val childUpdates = hashMapOf<String, Any>(
-            "/users/$userId/budgets/$budgetName/records/$key" to postRecord
+            "/users/$userId/budgets/$budgetId/records/$key" to postRecord
         )
         database.updateChildren(childUpdates)
     }
 
-    fun writeNewBudget(userId: String, budgetName: String, startingAmount: Float, period: String) {
-        val key = users.child(userId).child("budgets").push().key
-    }
+
 }

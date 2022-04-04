@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/add_budget_text">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_budget_name"
+            android:id="@+id/budget_name_textInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,6 +41,7 @@
             app:hintTextColor="@color/boxStrokeColor">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/budget_name_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
@@ -50,7 +51,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/starting_budget_textView"
+            android:id="@+id/starting_budget_textInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,6 +63,7 @@
             app:placeholderText="@string/example_amount">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/starting_budget_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
