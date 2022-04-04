@@ -6,15 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ca.sfu.iat.fintrack.R
-import ca.sfu.iat.fintrack.model.Score
+import ca.sfu.iat.fintrack.model.Record
 import android.graphics.Color
+import android.util.Log
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -25,11 +32,19 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class PieFragment : Fragment() {
+    private var period: String? = null
+    private var budget: String? = null
     private lateinit var pieChart : PieChart
-    private var scoreList = ArrayList<Score>()
-    val pieEntries: ArrayList<PieEntry> = ArrayList()
+    private var scoreList = ArrayList<Record>()
+    private val pieEntries: ArrayList<PieEntry> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            period = it.getString(ARG_PARAM1)
+            budget = it.getString(ARG_PARAM2)
+            println("$period, $budget REZ PIE FRAG")
+        }
     }
 
     override fun onCreateView(
@@ -39,10 +54,28 @@ class PieFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_pie, container, false)
         pieChart = view.findViewById(R.id.pie)
-        scoreList = getScoreList()
-        println(scoreList)
-        initPieChart()
-        loadPieChart(scoreList)
+        val database = Firebase.database.reference
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val recordsQuery = database.child("users/$uid/records")
+        recordsQuery.addValueEventListener(object: ValueEventListener {
+            val recordsList = ArrayList<Record>()
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val record: Record? = dataSnapshot.getValue<Record>()
+                    if (record != null) {
+                        recordsList.add(record)
+                    }
+                }
+                scoreList = recordsList
+                initPieChart()
+                loadPieChart(scoreList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("Firebase", "loadPost:onCancelled", error.toException())
+            }
+        })
         return view
     }
 
@@ -66,22 +99,20 @@ class PieFragment : Fragment() {
             }
     }
 
-    private fun loadPieChart(data: ArrayList<Score>) {
-        val scorePerSeason = data.groupBy { it.season }
+    private fun loadPieChart(data: ArrayList<Record>) {
+        val scorePerSeason = data.groupBy { it.category }
             .mapValues { (_, score) ->
-                score.sumOf { it.score }
+                score.sumOf { it.amount }
             }
         for (k in scorePerSeason) {
             println(k.value.toString() + k.key)
             pieEntries.add(PieEntry(k.value.toFloat(), k.key))
         }
-        val pieDataSet = PieDataSet(pieEntries, "Seasonal")
+        val pieDataSet = PieDataSet(pieEntries, "Spend Category")
         pieDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
         val pieData = PieData(pieDataSet)
         pieChart.data = pieData
         pieChart.invalidate()
-
-
     }
 
     private fun initPieChart() {
@@ -89,9 +120,10 @@ class PieFragment : Fragment() {
         pieChart.setUsePercentValues(true)
         pieChart.setEntryLabelTextSize(12f)
         pieChart.setEntryLabelColor(Color.BLACK)
-        pieChart.centerText = "Spending by Season"
+        pieChart.centerText = "Spending by Category"
         pieChart.setCenterTextSize(24f)
         pieChart.description.isEnabled = false
+        pieChart.setTouchEnabled(false)
         val l = pieChart.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
@@ -100,26 +132,4 @@ class PieFragment : Fragment() {
         l.isEnabled = true
         pieChart.animateY(1400, Easing.EaseInOutQuad)
     }
-
-    /**
-     * simulate API Call
-     */
-    private fun getScoreList(): ArrayList<Score> {
-        scoreList.add(Score("January", 300.0, "Winter"))
-        scoreList.add(Score("February", 250.0,"Winter"))
-        scoreList.add(Score("March", 500.0,"Spring"))
-        scoreList.add(Score("April", 50.0,"Spring"))
-        scoreList.add(Score("May", 100.0,"Spring"))
-        scoreList.add(Score("June", 100.0,"Summer"))
-        scoreList.add(Score("July", 100.0, "Summer"))
-        scoreList.add(Score("August", 100.0, "Summer"))
-        scoreList.add(Score("September", 100.0,"Fall"))
-        scoreList.add(Score("October", 100.0,"Fall"))
-        scoreList.add(Score("November", 100.0,"Fall"))
-        scoreList.add(Score("December", 100.0,"Winter"))
-
-        return scoreList
-    }
-
-
 }

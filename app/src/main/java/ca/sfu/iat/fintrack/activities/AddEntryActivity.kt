@@ -1,17 +1,23 @@
 package ca.sfu.iat.fintrack.activities
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.databinding.ActivityAddEntryBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import ca.sfu.iat.fintrack.FirebaseHandler
+import ca.sfu.iat.fintrack.MainActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class AddEntryActivity : AppCompatActivity() {
-
+    val dbHandler = FirebaseHandler()
     private lateinit var binding: ActivityAddEntryBinding
     private val calendar: Calendar = Calendar.getInstance()
 
@@ -19,6 +25,16 @@ class AddEntryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddEntryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val spinner = binding.spinnerCategory
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.categories_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
 
         val dateSetListener =
             DatePickerDialog.OnDateSetListener { _, year, month, day ->
@@ -38,8 +54,29 @@ class AddEntryActivity : AppCompatActivity() {
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)).show()
         }
-    }
 
+        binding.buttonAddEntry.setOnClickListener {
+            val date = binding.dateDisplay.text.toString()
+            val category = binding.spinnerCategory.selectedItem.toString()
+            val itemName = binding.billItem.text.toString()
+            val price = binding.priceId.text.toString().toDouble()
+            val type: String = findViewById<View?>(binding.toggleButtonGroup.checkedButtonId).tag.toString()
+            FirebaseAuth.getInstance().currentUser?.let { it1 -> dbHandler.writeEntry(it1.uid, itemName, price, category, date, type) }
+            clearFields()
+        }
+        binding.buttonDone.setOnClickListener {
+            clearFields()
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
+
+    }
+    fun clearFields() {
+        binding.dateDisplay.setText("")
+        binding.billItem.setText("")
+        binding.priceId.setText("")
+        binding.dateDisplay.setText("")
+    }
     private fun updateEditTextView() {
         val myFormat = "MM/dd/yyyy"
         val sdf = SimpleDateFormat(myFormat, Locale.US)

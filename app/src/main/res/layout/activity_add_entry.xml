@@ -51,6 +51,7 @@
                     android:gravity="center"
                     android:insetLeft="5dp"
                     android:insetRight="5dp"
+                    android:tag="@string/income"
                     android:text="@string/income"
                     android:textColor="@color/hintColor" />
 
@@ -62,12 +63,29 @@
                     android:gravity="center"
                     android:insetLeft="5dp"
                     android:insetRight="5dp"
+                    android:tag="@string/expense"
                     android:text="@string/expense"
                     android:textColor="@color/hintColor" />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/category_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textSize="16dp" />
+
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/category"
+            android:contentDescription="@string/category"
+            android:minHeight="50dp"
+            android:tooltipText="@string/category" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/date_picker"
@@ -85,52 +103,31 @@
                 android:id="@+id/date_display"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
                 android:fontFamily="@font/poppins_light"
-                android:textColorHint="@color/hintColor"
-                android:focusable="false"/>
+                android:textColorHint="@color/hintColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/category"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="@string/category"
-            android:textColorHint="@color/hintColor"
-            app:boxStrokeColor="@color/boxStrokeColor"
-            app:hintTextColor="@color/boxStrokeColor"
-            app:placeholderText="@string/bill"
-            android:focusable="false">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/calendar_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_light"
-                android:textColorHint="@color/hintColor"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/billItem"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:focusable="false"
             android:hint="@string/item"
             android:textColorHint="@color/hintColor"
             app:boxStrokeColor="@color/boxStrokeColor"
             app:hintTextColor="@color/boxStrokeColor"
-            app:placeholderText="@string/item_placeholder"
-            android:focusable="false">
+            app:placeholderText="@string/item_placeholder">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/bill_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
-                android:textColorHint="@color/hintColor"/>
+                android:inputType="textShortMessage"
+                android:textColorHint="@color/hintColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,25 +145,47 @@
             android:focusable="false">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/price_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
-                android:textColorHint="@color/hintColor"/>
+                android:inputType="numberDecimal"
+                android:textColorHint="@color/hintColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
-    <Button
-        android:layout_gravity="center"
-        android:id="@+id/button_add_entry"
-        android:layout_width="339dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/poppins_light"
-        android:text="@string/add_entry"
-        android:textAllCaps="false"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_add_entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30sp"
+            android:layout_marginTop="10dp"
+            android:layout_weight=".2"
+            android:width="100dp"
+            android:fontFamily="@font/poppins_light"
+            android:text="@string/add_entry"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+
+        <Button
+            android:id="@+id/button_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30sp"
+            android:layout_marginTop="10dp"
+            android:layout_weight=".2"
+            android:width="100dp"
+            android:fontFamily="@font/poppins_light"
+            android:text="Done"
+            android:textAlignment="center" />
+    </LinearLayout>
 
 </LinearLayout>

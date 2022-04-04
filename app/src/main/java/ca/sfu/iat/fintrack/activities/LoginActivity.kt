@@ -7,7 +7,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ca.sfu.iat.fintrack.MainActivity
 import ca.sfu.iat.fintrack.databinding.ActivityLoginBinding
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -15,6 +17,22 @@ import com.google.firebase.ktx.Firebase
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+
+    override fun onStart() {
+        super.onStart()
+
+        auth.currentUser?.reload()?.addOnFailureListener { e ->
+            when (e) {
+                is FirebaseAuthInvalidUserException ->
+                    Log.d("invalidUser", "User does not exist")
+                else -> {
+                    val user = auth.currentUser
+                    Log.i("currUser", user?.email.toString())
+                    updateUI(user)
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
