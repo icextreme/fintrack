@@ -23,7 +23,6 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -34,13 +33,20 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class BarFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+    private var period: String? = null
+    private var budget: String? = null
     private lateinit var barChart : BarChart
     private var scoreList = ArrayList<Record>()
     private val entries: ArrayList<BarEntry> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        arguments?.let {
+            period = it.getString(ARG_PARAM1)
+            budget = it.getString(ARG_PARAM2)
+            println("$period, $budget REZ BAR FRAG")
+        }
     }
 
     override fun onCreateView(

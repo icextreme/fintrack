@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import ca.sfu.iat.fintrack.R
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -21,11 +19,11 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class GraphFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var period: String? = null
     private var budget: String? = null
     private lateinit var pieButton: Button
     private lateinit var barButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
@@ -34,6 +32,7 @@ class GraphFragment : Fragment() {
         arguments?.let {
             period = it.getString(ARG_PARAM1)
             budget = it.getString(ARG_PARAM2)
+            println("$period, $budget REZ GRAPH FRAG")
         }
     }
 
@@ -73,7 +72,6 @@ class GraphFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment GraphFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             GraphFragment().apply {
@@ -86,16 +84,22 @@ class GraphFragment : Fragment() {
 
     private fun displayBarFragment() {
         parentFragmentManager.commit {
-            replace<BarFragment>(R.id.GraphFragmentContainer)
-            setReorderingAllowed(true)
-            addToBackStack(null)
+            if (period != null && budget != null) {
+                val barFragment = BarFragment.newInstance(period.toString(), budget.toString())
+                replace(R.id.GraphFragmentContainer, barFragment)
+                setReorderingAllowed(true)
+                addToBackStack(null)
+            }
         }
     }
     private fun displayPieFragment() {
         parentFragmentManager.commit {
-            replace<PieFragment>(R.id.GraphFragmentContainer)
-            setReorderingAllowed(true)
-            addToBackStack(null)
+            if (period != null && budget != null) {
+                val pieFragment = PieFragment.newInstance(period.toString(), budget.toString())
+                replace(R.id.GraphFragmentContainer, pieFragment)
+                setReorderingAllowed(true)
+                addToBackStack(null)
+            }
         }
     }
 }

@@ -23,7 +23,6 @@ import com.google.firebase.ktx.Firebase
 import kotlin.collections.ArrayList
 
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -34,7 +33,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class LandingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var tabLayout: TabLayout
@@ -177,7 +175,6 @@ class LandingFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment LandingFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             LandingFragment().apply {
@@ -198,9 +195,7 @@ class LandingFragment : Fragment() {
 
     private fun displayGraphFragment() {
         parentFragmentManager.commit {
-            val bundle = Bundle()
             val listStr = getFilterOptions()
-            bundle.putStringArrayList("filter", listStr)
             if (!listStr.contains("null")) {
                 val graphFragment = GraphFragment.newInstance(listStr[0], listStr[1])
                 replace(R.id.graphFragmentContainerView, graphFragment)
