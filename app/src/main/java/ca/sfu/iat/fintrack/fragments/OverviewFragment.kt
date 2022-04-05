@@ -19,11 +19,11 @@ import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import kotlin.collections.ArrayList
 
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,32 +88,7 @@ class LandingFragment : Fragment() {
                             }
                         }
                         setupSpinner(budgets, spinnerBudget, budgetNames)
-                        FirebaseAuth.getInstance().currentUser?.let { it1 ->
-                            database.child("users/${it1.uid}/budgets")
-                                .orderByChild("name")
-                                .equalTo(spinnerBudget.selectedItem.toString())
-                                .addValueEventListener(
-                                    object : ValueEventListener {
-                                        var budgetId: String? = null
-                                        override fun onDataChange(snapshot: DataSnapshot) {
-                                            for (each in snapshot.children) {
-                                                budgetId = each.key.toString()
-                                                println("BUDGETID: ${budgetId}")
-                                            }
-
-                                            val recordsQuery = database.child("users/$uid/budgets/$budgetId/records")
-                                        }
-
-                                        override fun onCancelled(error: DatabaseError) {
-                                            Log.w(
-                                                "FirebaseAuth.getInstance.budgets.onCancelled",
-                                                "error",
-                                                error.toException()
-                                            )
-                                        }
-                                    }
-                                )
-                        }
+                        updateTotalsTextView(uid, spinnerBudget)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -126,7 +101,6 @@ class LandingFragment : Fragment() {
                 }
             )
         }
-
 
         context?.let {
             ArrayAdapter.createFromResource(
@@ -145,6 +119,14 @@ class LandingFragment : Fragment() {
                     val intent = Intent(activity, AddBudgetActivity::class.java)
                     activity?.startActivity(intent)
                     spinnerBudget.setSelection(1)
+                } else {
+                    when (tabLayout.selectedTabPosition) {
+                        0 -> displayGraphFragment()
+                        1 -> displayListFragment()
+                    }
+                    if (uid != null) {
+                        updateTotalsTextView(uid, spinnerBudget)
+                    }
                 }
             }
 
@@ -216,6 +198,74 @@ class LandingFragment : Fragment() {
             }
     }
 
+    private fun updateTotalsTextView(uid: String, spinnerBudget: Spinner) {
+        FirebaseAuth.getInstance().currentUser?.let { it1 ->
+            database.child("users/${it1.uid}/budgets")
+                .orderByChild("name")
+                .equalTo(spinnerBudget.selectedItem.toString())
+                .addValueEventListener(
+                    object : ValueEventListener {
+                        var budgetId: String? = null
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            for (each in snapshot.children) {
+                                budgetId = each.key.toString()
+                                println("BUDGETID: ${budgetId}")
+                            }
+
+                            val recordsQuery =
+                                database.child("users/$uid/budgets/$budgetId/records")
+                            updateTotals(recordsQuery)
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Log.w(
+                                "FirebaseAuth.getInstance.budgets.onCancelled",
+                                "error",
+                                error.toException()
+                            )
+                        }
+                    }
+                )
+        }
+    }
+
+    private fun updateTotals(dbRef: DatabaseReference) {
+        dbRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var balance = 0.0
+                var expense = 0.0
+                var income = 0.0
+                for (dataSnapshot in snapshot.children) {
+                    val record: Record? = dataSnapshot.getValue<Record>()
+                    if (record != null) {
+                        if (record.type == getString(R.string.income)) {
+                            income += record.amount
+                            balance += record.amount
+                        } else if (record.type == getString((R.string.expense))) {
+                            expense += record.amount
+                            balance -= record.amount
+                        }
+                    }
+                }
+
+                val balanceTextView = view?.findViewById<TextView>(R.id.textViewBalance)
+                val expenseTextView = view?.findViewById<TextView>(R.id.textViewExpense)
+                val incomeTextView = view?.findViewById<TextView>(R.id.textViewIncome)
+                val str1 = "$ " + String.format("%.2f", balance) + "\nBalance"
+                val str2 = "$ " + String.format("%.2f", expense) + "\nExpense"
+                val str3 = "$ " + String.format("%.2f", income) + "\nIncome"
+                balanceTextView?.text = str1
+                expenseTextView?.text = str2
+                incomeTextView?.text = str3
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("Firebase", "loadPost:onCancelled", error.toException())
+            }
+        })
+    }
+
     private fun displayListFragment() {
         val spinnerPeriod = view?.findViewById<Spinner>(R.id.spinnerPeriod)
         if (spinnerPeriod != null) {
@@ -276,8 +326,8 @@ class LandingFragment : Fragment() {
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerBudget.adapter = spinnerArrayAdapter
         }
+
         spinnerBudget.setSelection(1)
-        println("SPINNER// ${spinnerBudget.selectedItem}")
 
     }
 }
