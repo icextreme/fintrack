@@ -12,5 +12,4 @@ enum class Category {
     MEDICAL,
     SAVINGS,
     PERSONAL
-
 }

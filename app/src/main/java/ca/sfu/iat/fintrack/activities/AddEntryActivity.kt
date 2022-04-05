@@ -139,15 +139,16 @@ class AddEntryActivity : AppCompatActivity() {
             ArrayAdapter(this, android.R.layout.simple_spinner_item, budgetNames)
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         budgetSpinner.adapter = spinnerArrayAdapter
-   
+
     }
-    
+
     private fun clearFields() {
         binding.dateDisplay.setText("")
         binding.billItem.setText("")
         binding.priceId.setText("")
         binding.dateDisplay.setText("")
     }
+
     private fun updateEditTextView() {
         val myFormat = "MM/dd/yyyy"
         val sdf = SimpleDateFormat(myFormat, Locale.US)

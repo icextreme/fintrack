@@ -1,14 +1,7 @@
 package ca.sfu.iat.fintrack.model
 
-import ca.sfu.iat.fintrack.FirebaseHandler
 import com.google.firebase.database.Exclude
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.IgnoreExtraProperties
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.util.*
-import kotlin.collections.ArrayList
 
 @IgnoreExtraProperties
 data class Record(

@@ -2,7 +2,6 @@ package ca.sfu.iat.fintrack.activities
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.databinding.ActivityAddBudgetBinding

@@ -60,7 +60,7 @@ class ListFragment : Fragment() {
             val uid = FirebaseAuth.getInstance().currentUser?.uid
             database.child("users/$uid/budgets")
                 .orderByChild("name")
-                .equalTo("$budget").addListenerForSingleValueEvent(object: ValueEventListener {
+                .equalTo("$budget").addListenerForSingleValueEvent(object : ValueEventListener {
                     var key: String? = null
                     override fun onDataChange(snapshot: DataSnapshot) {
                         for (dataSnapshot in snapshot.children) {
@@ -68,7 +68,7 @@ class ListFragment : Fragment() {
                         }
 
                         val recordsQuery = database.child("users/$uid/budgets/$key/records")
-                        recordsQuery.addValueEventListener(object: ValueEventListener {
+                        recordsQuery.addValueEventListener(object : ValueEventListener {
                             val recordsList = ArrayList<Record>()
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 for (dataSnapshot in snapshot.children) {
@@ -94,6 +94,7 @@ class ListFragment : Fragment() {
                 })
         }
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

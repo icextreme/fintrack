@@ -23,8 +23,8 @@
         android:id="@+id/linearLayout"
         android:layout_width="339dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/income_expense_buttons"
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="Category"
             android:textSize="16dp" />
-      
+
         <Spinner
             android:id="@+id/spinner_category"
             android:layout_width="match_parent"
@@ -108,11 +108,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:drawableEnd="@drawable/ic_baseline_calendar24"
             android:hint="@string/date_picker"
             android:textColorHint="@color/hintColor"
             app:boxStrokeColor="@color/boxStrokeColor"
-            app:hintTextColor="@color/boxStrokeColor"
-            android:drawableEnd="@drawable/ic_baseline_calendar24">
+            app:hintTextColor="@color/boxStrokeColor">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/date_display"
@@ -152,12 +152,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:focusable="false"
             android:hint="@string/price"
             android:textColorHint="@color/hintColor"
             app:boxStrokeColor="@color/boxStrokeColor"
             app:hintTextColor="@color/boxStrokeColor"
-            app:placeholderText="@string/price_placeholder"
-            android:focusable="false">
+            app:placeholderText="@string/price_placeholder">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/price_id"

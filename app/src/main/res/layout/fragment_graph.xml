@@ -14,7 +14,7 @@
             android:id="@+id/GraphFragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"></androidx.fragment.app.FragmentContainerView>
+            android:layout_weight="1" />
 
         <LinearLayout
             android:id="@+id/linearLayoutH1"

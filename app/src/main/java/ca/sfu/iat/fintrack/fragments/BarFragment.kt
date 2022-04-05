@@ -11,7 +11,9 @@ import ca.sfu.iat.fintrack.model.Record
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.auth.FirebaseAuth
@@ -31,7 +33,7 @@ private const val ARG_PARAM2 = "param2"
 class BarFragment : Fragment() {
     private var period: String? = null
     private var budget: String? = null
-    private lateinit var barChart : BarChart
+    private lateinit var barChart: BarChart
     private var filteredList = HashMap<String, Double>()
     private val entries: ArrayList<BarEntry> = ArrayList()
 
@@ -56,7 +58,7 @@ class BarFragment : Fragment() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         database.child("users/$uid/budgets")
             .orderByChild("name")
-            .equalTo("$budget").addListenerForSingleValueEvent(object: ValueEventListener {
+            .equalTo("$budget").addListenerForSingleValueEvent(object : ValueEventListener {
                 var key: String? = null
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (dataSnapshot in snapshot.children) {
@@ -64,7 +66,7 @@ class BarFragment : Fragment() {
                     }
 
                     val recordsQuery = database.child("users/$uid/budgets/$key/records")
-                    recordsQuery.addValueEventListener(object: ValueEventListener {
+                    recordsQuery.addValueEventListener(object : ValueEventListener {
                         val recordsList = ArrayList<Record>()
                         override fun onDataChange(snapshot: DataSnapshot) {
                             for (dataSnapshot in snapshot.children) {
@@ -162,9 +164,11 @@ class BarFragment : Fragment() {
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             val index = value.toInt()
-            val map1 = mapOf("01" to "Jan", "02" to "Feb", "03" to "Mar", "04" to "Apr",
-            "05" to "May", "06" to "Jun", "07" to "Jul", "08" to "Aug", "09" to "Sep",
-            "10" to "Oct", "11" to "Nov", "12" to "Dec")
+            val map1 = mapOf(
+                "01" to "Jan", "02" to "Feb", "03" to "Mar", "04" to "Apr",
+                "05" to "May", "06" to "Jun", "07" to "Jul", "08" to "Aug", "09" to "Sep",
+                "10" to "Oct", "11" to "Nov", "12" to "Dec"
+            )
             return if (index < filteredList.entries.size) {
                 if (filteredList.keys.toTypedArray()[index] in map1) {
                     map1.getValue(filteredList.keys.toTypedArray()[index])

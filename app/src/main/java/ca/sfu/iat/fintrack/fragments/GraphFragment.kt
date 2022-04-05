@@ -1,11 +1,11 @@
 package ca.sfu.iat.fintrack.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import ca.sfu.iat.fintrack.R
 
@@ -91,6 +91,7 @@ class GraphFragment : Fragment() {
             }
         }
     }
+
     private fun displayPieFragment() {
         parentFragmentManager.commit {
             if (period != null && budget != null) {

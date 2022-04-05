@@ -1,18 +1,20 @@
 package ca.sfu.iat.fintrack.fragments
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.model.Record
-import android.graphics.Color
-import android.util.Log
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -34,7 +36,7 @@ private const val ARG_PARAM2 = "param2"
 class PieFragment : Fragment() {
     private var period: String? = null
     private var budget: String? = null
-    private lateinit var pieChart : PieChart
+    private lateinit var pieChart: PieChart
     private var scoreList = ArrayList<Record>()
     private val pieEntries: ArrayList<PieEntry> = ArrayList()
 
@@ -58,39 +60,39 @@ class PieFragment : Fragment() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         database.child("users/$uid/budgets")
             .orderByChild("name")
-            .equalTo("$budget").addListenerForSingleValueEvent(object: ValueEventListener {
+            .equalTo("$budget").addListenerForSingleValueEvent(object : ValueEventListener {
                 var key: String? = null
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
-                    key = dataSnapshot.key.toString()
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (dataSnapshot in snapshot.children) {
+                        key = dataSnapshot.key.toString()
+                    }
+
+                    val recordsQuery = database.child("users/$uid/budgets/$key/records")
+                    recordsQuery.addValueEventListener(object : ValueEventListener {
+                        val recordsList = ArrayList<Record>()
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            for (dataSnapshot in snapshot.children) {
+                                val record: Record? = dataSnapshot.getValue<Record>()
+                                if (record != null && record.type == getString(R.string.expense)) {
+                                    recordsList.add(record)
+                                }
+                            }
+                            scoreList = recordsList
+                            initPieChart()
+                            loadPieChart(scoreList)
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            // Getting Post failed, log a message
+                            Log.w("Firebase", "loadPost:onCancelled", error.toException())
+                        }
+                    })
+
                 }
 
-                val recordsQuery = database.child("users/$uid/budgets/$key/records")
-                recordsQuery.addValueEventListener(object: ValueEventListener {
-                    val recordsList = ArrayList<Record>()
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        for (dataSnapshot in snapshot.children) {
-                            val record: Record? = dataSnapshot.getValue<Record>()
-                            if (record != null && record.type == getString(R.string.expense)) {
-                                recordsList.add(record)
-                            }
-                        }
-                        scoreList = recordsList
-                        initPieChart()
-                        loadPieChart(scoreList)
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        // Getting Post failed, log a message
-                        Log.w("Firebase", "loadPost:onCancelled", error.toException())
-                    }
-                })
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
         return view
     }
 

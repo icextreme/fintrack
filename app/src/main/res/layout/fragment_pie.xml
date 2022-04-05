@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.PieFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/pie">
-        </com.github.mikephil.charting.charts.PieChart>
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </FrameLayout>
