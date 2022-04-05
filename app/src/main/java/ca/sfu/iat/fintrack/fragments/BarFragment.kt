@@ -69,7 +69,7 @@ class BarFragment : Fragment() {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             for (dataSnapshot in snapshot.children) {
                                 val record: Record? = dataSnapshot.getValue<Record>()
-                                if (record != null) {
+                                if (record != null && record.type == getString(R.string.expense)) {
                                     recordsList.add(record)
                                 }
                             }
