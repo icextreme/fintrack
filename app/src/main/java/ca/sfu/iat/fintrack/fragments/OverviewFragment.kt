@@ -90,7 +90,7 @@ class LandingFragment : Fragment() {
             }
 
         val budgets = hashMapOf<String, String>()
-        val budgetNames = mutableListOf("+ Add Entry")
+        val budgetNames = mutableListOf("+ Add Budget")
         val spinnerBudget: Spinner = view.findViewById(R.id.spinnerBudget)
 
         FirebaseAuth.getInstance().currentUser?.let { it1 ->
