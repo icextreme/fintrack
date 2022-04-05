@@ -1,10 +1,10 @@
 package ca.sfu.iat.fintrack.activities
 
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import ca.sfu.iat.fintrack.FirebaseHandler
