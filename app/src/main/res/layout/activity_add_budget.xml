@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AddBudgetActivity">
+    tools:context=".activities.AddBudgetActivity"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/add_budget_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginVertical="30dp"
         android:fontFamily="@font/montserrat_medium"
         android:text="@string/add_budget"
         android:textColor="@color/black"
@@ -21,13 +21,16 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="339dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_budget_text">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            app:srcCompat="@drawable/budget" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/budget_name_textInputLayout"
@@ -35,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="20dp"
             android:hint="@string/name"
             android:textColorHint="@color/hintColor"
             app:boxStrokeColor="@color/boxStrokeColor"
@@ -56,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
+            android:layout_marginHorizontal="20dp"
             android:hint="@string/starting_budget"
             android:textColorHint="@color/hintColor"
             app:boxStrokeColor="@color/boxStrokeColor"
@@ -71,17 +76,19 @@
                 android:textColorHint="@color/hintColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/button_create"
+            android:layout_width="339dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/poppins_light"
+            android:text="@string/create"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_create"
-        android:layout_width="339dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/poppins_light"
-        android:text="@string/create"
-        android:textAllCaps="false"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
