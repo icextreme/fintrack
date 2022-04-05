@@ -25,30 +25,13 @@ class AddBudgetActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonCreate.setOnClickListener {
-            finish()
-        }
-
-        val periodSpinner = binding.spinnerPeriod
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.period_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            periodSpinner.adapter = adapter
-        }
-
-        binding.buttonCreate.setOnClickListener {
             FirebaseAuth.getInstance().currentUser?.let { it1 ->
                 writeNewBudget(
                     it1.uid,
                     binding.budgetNameEditText.text.toString(),
                     binding.startingBudgetEditText.text.toString().toDouble(),
-                    binding.spinnerPeriod.selectedItem.toString()
                 )
             }
-            finish()
         }
     }
 
@@ -56,7 +39,6 @@ class AddBudgetActivity : AppCompatActivity() {
         userId: String,
         budgetName: String,
         startingAmount: Double,
-        period: String
     ) {
         val key = database.child("users").child(userId).child("budgets").push().key
 
@@ -65,7 +47,7 @@ class AddBudgetActivity : AppCompatActivity() {
             return
         }
 
-        val budget = Budget(budgetName, startingAmount, period)
+        val budget = Budget(budgetName, startingAmount)
         val postBudget = budget.toMap()
 
         val childUpdates = hashMapOf<String, Any>(

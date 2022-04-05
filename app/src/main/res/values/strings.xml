@@ -103,4 +103,5 @@
     <string name="list_view">List View</string>
     <string name="graph_view">Graph View</string>
     <string name="welcome_user">Welcome %1$s</string>
+    <string name="starting_budget">Starting Budget</string>
 </resources>

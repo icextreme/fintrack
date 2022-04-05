@@ -31,14 +31,14 @@ private const val ARG_PARAM2 = "param2"
  */
 class ListFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var period: String? = null
+    private var budget: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            period = it.getString(ARG_PARAM1)
+            budget = it.getString(ARG_PARAM2)
         }
     }
 
@@ -58,26 +58,40 @@ class ListFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
             val database = Firebase.database.reference
             val uid = FirebaseAuth.getInstance().currentUser?.uid
-            val recordsQuery = database.child("users/$uid/records")
-            recordsQuery.addValueEventListener(object: ValueEventListener {
-                val recordsList = ArrayList<Record>()
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (dataSnapshot in snapshot.children) {
-                        val record: Record? = dataSnapshot.getValue<Record>()
-                        if (record != null) {
-                            recordsList.add(record)
+            database.child("users/$uid/budgets")
+                .orderByChild("name")
+                .equalTo("$budget").addListenerForSingleValueEvent(object: ValueEventListener {
+                    var key: String? = null
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for (dataSnapshot in snapshot.children) {
+                            key = dataSnapshot.key.toString()
                         }
+
+                        val recordsQuery = database.child("users/$uid/budgets/$key/records")
+                        recordsQuery.addValueEventListener(object: ValueEventListener {
+                            val recordsList = ArrayList<Record>()
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                for (dataSnapshot in snapshot.children) {
+                                    val record: Record? = dataSnapshot.getValue<Record>()
+                                    if (record != null) {
+                                        recordsList.add(record)
+                                    }
+                                }
+                                val dataGroupByDate = recordsList.groupBy { it.date }
+                                adapter = ListAdapter(dataGroupByDate)
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                // Getting Post failed, log a message
+                                Log.w("Firebase", "loadPost:onCancelled", error.toException())
+                            }
+                        })
+
                     }
 
-                    val dataGroupByDate = recordsList.groupBy { it.date }
-                    adapter = ListAdapter(dataGroupByDate)
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    // Getting Post failed, log a message
-                    Log.w("Firebase", "loadPost:onCancelled", error.toException())
-                }
-            })
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                })
         }
     }
     companion object {
