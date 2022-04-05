@@ -295,7 +295,6 @@ class LandingFragment : Fragment() {
                 setReorderingAllowed(true)
                 addToBackStack(null)
             }
-
         }
     }
 
@@ -328,6 +327,5 @@ class LandingFragment : Fragment() {
         }
 
         spinnerBudget.setSelection(1)
-
     }
 }

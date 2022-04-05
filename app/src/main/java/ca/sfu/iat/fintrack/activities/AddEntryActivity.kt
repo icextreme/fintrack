@@ -1,6 +1,7 @@
 package ca.sfu.iat.fintrack.activities
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import ca.sfu.iat.fintrack.FirebaseHandler
+import ca.sfu.iat.fintrack.MainActivity
 import ca.sfu.iat.fintrack.R
 import ca.sfu.iat.fintrack.databinding.ActivityAddEntryBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -122,12 +124,11 @@ class AddEntryActivity : AppCompatActivity() {
 
         binding.buttonDone.setOnClickListener {
             clearFields()
-//            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
     }
-
 
     private fun setupSpinner(budgets: HashMap<String, String>, budgetSpinner: Spinner) {
         val budgetNames: List<String> = budgets.keys.toList()
