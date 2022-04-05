@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ca.sfu.iat.fintrack.R
+import ca.sfu.iat.fintrack.model.Record
 
-class CategoryAdapter(private val data: Array<String>) :
+class CategoryAdapter(private val data: ArrayList<Record>) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -22,7 +23,11 @@ class CategoryAdapter(private val data: Array<String>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textView.text = data[position]
+        var output = "Name: ${data[position].recordName}\n" +
+                "Amount: $${data[position].amount}\n" +
+                "Category: ${data[position].category}\n" +
+                "Type: ${data[position].type}"
+        holder.textView.text = output
     }
 
     override fun getItemCount(): Int {

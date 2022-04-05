@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_overview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.LandingFragment">
 
     <LinearLayout
@@ -26,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginVertical="4dp"
                 android:gravity="center"
-                android:text="Welcome User" />
+                android:text="@string/welcome_user" />
 
             <Spinner
                 android:id="@+id/spinnerPeriod"
@@ -34,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:tooltipText="Select Period" />
+
             <Spinner
                 android:id="@+id/spinnerBudget"
                 android:layout_width="match_parent"
@@ -76,11 +78,11 @@
         </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            app:tabSelectedTextColor="@color/black"
-            android:id="@+id/tabLayout">
+            app:tabSelectedTextColor="@color/black">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -105,8 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                android:tag="graph_tag">
-            </androidx.fragment.app.FragmentContainerView>
+                android:tag="graph_tag"></androidx.fragment.app.FragmentContainerView>
         </LinearLayout>
 
     </LinearLayout>

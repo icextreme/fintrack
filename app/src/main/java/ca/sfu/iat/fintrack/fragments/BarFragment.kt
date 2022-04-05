@@ -1,6 +1,5 @@
 package ca.sfu.iat.fintrack.fragments
 
-import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,83 +7,133 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ca.sfu.iat.fintrack.R
-import ca.sfu.iat.fintrack.model.Score
+import ca.sfu.iat.fintrack.model.Record
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BarFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class BarFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+    private var period: String? = null
+    private var budget: String? = null
     private lateinit var barChart : BarChart
-    private var scoreList = ArrayList<Score>()
-    val entries: ArrayList<BarEntry> = ArrayList()
+    private var filteredList = HashMap<String, Double>()
+    private val entries: ArrayList<BarEntry> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        arguments?.let {
+            period = it.getString(ARG_PARAM1)
+            budget = it.getString(ARG_PARAM2)
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_bar, container, false)
-//        val bundle = arguments
-//        val choice = bundle!!.getString("graphType")
-//        Log.i("s", choice.toString())
-        barChart = view.findViewById(R.id.bar)
-        scoreList = getScoreList()
-        initBarChart()
-        loadBarChart(scoreList)
 
+        barChart = view.findViewById(R.id.bar)
+        val database = Firebase.database.reference
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val recordsQuery = database.child("users/$uid/records")
+        recordsQuery.addValueEventListener(object: ValueEventListener {
+            val recordsList = ArrayList<Record>()
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val record: Record? = dataSnapshot.getValue<Record>()
+                    if (record != null) {
+                        recordsList.add(record)
+                    }
+                }
+                initBarChart()
+                loadBarChart(recordsList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("Firebase", "loadPost:onCancelled", error.toException())
+            }
+        })
         return view
     }
 
-    private fun loadBarChart(data: ArrayList<Score>) {
-        for (i in data.indices) {
-            val score = data[i]
-            entries.add(BarEntry(i.toFloat(), score.score.toFloat()))
+    private fun loadBarChart(data: ArrayList<Record>) {
+        val filteredValue = filterBarChart(data)
+        filteredList = filteredValue as HashMap<String, Double>
+        var count = 0.0
+        for (i in filteredValue.entries) {
+            entries.add(BarEntry(count.toFloat(), i.value.toFloat()))
+            count += 1
         }
+
         val barDataSet = BarDataSet(entries, "")
         barDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
-
         val barData = BarData(barDataSet)
         barChart.data = barData
         barChart.invalidate()
+
+    }
+
+    private fun filterBarChart(data: ArrayList<Record>): Map<String, Double> {
+        var filteredValue = HashMap<String, Double>() as Map<String, Double>
+        if (period.equals(getString(R.string.yearly))) {
+            filteredValue = data.groupBy {
+                it.date.split("/")[2]
+            }.mapValues { (_, score) ->
+                score.sumOf { it.amount }
+            }
+        }
+
+        if (period.equals(getString(R.string.monthly))) {
+            filteredValue = data.groupBy {
+                it.date.split("/")[0]
+            }.mapValues { (_, score) ->
+                score.sumOf { it.amount }
+            }
+        }
+        return filteredValue
     }
 
     private fun initBarChart() {
-//        hide grid lines
+        // hide grid lines
         barChart.axisLeft.setDrawGridLines(false)
         val xAxis: XAxis = barChart.xAxis
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
 
-        //remove right y-axis
+        // remove right y-axis
         barChart.axisRight.isEnabled = false
 
-        //remove legend
+        // remove legend
         barChart.legend.isEnabled = false
 
-        //remove description label
+        // remove description label
         barChart.description.isEnabled = false
 
-        //add animation
+        // add animation
         barChart.animateY(3000)
+
+        // remove zoom
+        barChart.setTouchEnabled(false)
 
         // to draw label on xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
@@ -92,41 +141,27 @@ class BarFragment : Fragment() {
         xAxis.setDrawLabels(true)
         xAxis.granularity = 1f
         xAxis.labelRotationAngle = +90f
-
-    }
-
-    /**
-     * simulate API Call
-     */
-    private fun getScoreList(): ArrayList<Score> {
-        scoreList.add(Score("January", 300.0, "Winter"))
-        scoreList.add(Score("February", 250.0,"Winter"))
-        scoreList.add(Score("March", 500.0,"Spring"))
-        scoreList.add(Score("April", 50.0,"Spring"))
-        scoreList.add(Score("May", 100.0,"Spring"))
-        scoreList.add(Score("June", 100.0,"Summer"))
-        scoreList.add(Score("July", 100.0, "Summer"))
-        scoreList.add(Score("August", 100.0, "Summer"))
-        scoreList.add(Score("September", 100.0,"Fall"))
-        scoreList.add(Score("October", 100.0,"Fall"))
-        scoreList.add(Score("November", 100.0,"Fall"))
-        scoreList.add(Score("December", 100.0,"Winter"))
-
-        return scoreList
     }
 
     inner class MyAxisFormatter : IndexAxisValueFormatter() {
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             val index = value.toInt()
-            Log.d(ContentValues.TAG, "getAxisLabel: index $index")
-            return if (index < scoreList.size) {
-                scoreList[index].name
+            val map1 = mapOf("01" to "Jan", "02" to "Feb", "03" to "Mar", "04" to "Apr",
+            "05" to "May", "06" to "Jun", "07" to "Jul", "08" to "Aug", "09" to "Sep",
+            "10" to "Oct", "11" to "Nov", "12" to "Dec")
+            return if (index < filteredList.entries.size) {
+                if (filteredList.keys.toTypedArray()[index] in map1) {
+                    map1.getValue(filteredList.keys.toTypedArray()[index])
+                } else {
+                    filteredList.keys.toTypedArray()[index]
+                }
             } else {
                 ""
             }
         }
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
